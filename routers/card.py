@@ -1,5 +1,7 @@
-from api.api import Card, CardInsert
+from api.api import Card
 from fastapi import APIRouter
+
+from classes import CardInsert, CardUpdate
 
 router = APIRouter()
 
@@ -22,6 +24,19 @@ async def get_card(card_id: int):
 async def create_card(insertion: CardInsert):
     card = Card()
     step = await card.card_create(insertion)
-    res = await card.show_created_card(step)
+    res = await card.show_created(step)
     return res
 
+@router.post('/upd', description='Изменяем карточку')
+async def update_card(card_id: int, insertion: CardUpdate):
+    card = Card()
+    await card.card_update(card_id, insertion)
+    res = await card.show_created(card_id)
+    return res
+
+@router.post('/del', description='Удаляем карточку')
+async def delete_column(card_id: int):
+    card = Card()
+    res = await card.show_deleted(card_id)
+    await card.card_delete(card_id)
+    return res
