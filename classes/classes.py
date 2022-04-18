@@ -21,7 +21,7 @@ class ColumnUpdate(BaseModel):
 class CardInsert(BaseModel):
     title: str
     content: str
-    end_date: date
+    end_date: date = None
     order_num: int
     column_id: int
     desk_id: int

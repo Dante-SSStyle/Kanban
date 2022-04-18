@@ -15,7 +15,7 @@ async def get_all():
 @router.get('/get', description='Получаем конкретный столбец')
 async def get_card(column_id: int):
     column = Columns()
-    res = await column.column_read(column_id)
+    res = column.column_read(column_id)
     return res
 
 
