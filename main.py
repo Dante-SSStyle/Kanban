@@ -1,6 +1,5 @@
 from fastapi import FastAPI
-
-from api.api import database
+from db import database
 from routers import desk_router, card_router, column_router
 
 app = FastAPI(
