@@ -23,8 +23,8 @@ async def get_card(column_id: int):
 @router.post('/create', response_model=List[ColumnBase], description='Создаём столбец доски')
 async def create_column(insertion: ColumnInsert):
     column = Columns()
-    step = await column.column_create(insertion)
-    res = await column.show_created(step)
+    await column.column_create(insertion)
+    res = await column.show_created(insertion)
     return res
 
 
@@ -32,7 +32,7 @@ async def create_column(insertion: ColumnInsert):
 async def update_column(column_id: int, insertion: ColumnUpdate):
     column = Columns()
     await column.column_update(column_id, insertion)
-    res = await column.show_created(column_id)
+    res = await column.show_created(insertion, column_id)
     return res
 
 

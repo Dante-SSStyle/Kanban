@@ -23,8 +23,8 @@ async def get_desk(desk_id: int):
 @router.post('/create', response_model=List[DeskBase], description='Создаём доску')
 async def create_desk(insertion: DeskInsert):
     desk = Desk()
-    step = await desk.desk_create(insertion)
-    res = await desk.show_created(step)
+    await desk.desk_create(insertion)
+    res = await desk.show_created(insertion)
     return res
 
 
@@ -40,5 +40,5 @@ async def delete_desk(desk_id: int):
 async def update_desk(desk_id: int, insertion: DeskInsert):
     desk = Desk()
     await desk.desk_update(desk_id, insertion)
-    res = await desk.show_created(desk_id)
+    res = await desk.show_created(insertion, desk_id)
     return res

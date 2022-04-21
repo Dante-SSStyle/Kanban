@@ -1,5 +1,6 @@
 from typing import Optional
 from sqlalchemy import func
+from asyncpg.exceptions import ForeignKeyViolationError, UniqueViolationError
 from db import session, ColumnSQL, DeskSQL, CardSQL, database
 from db.exceptions import KanbanException
 
@@ -43,6 +44,18 @@ class MainInnerClass:
         order = get_order[0][0]
         return order
 
+    async def _exception_catcher(self, query):
+        res = database.execute(query)
+        try:
+            await res
+        except ForeignKeyViolationError:
+            raise KanbanException(404, 'Доски/таблицы с таким id не существует')
+        except UniqueViolationError:
+            raise KanbanException(400, 'Такое имя уже используется')
+        except Exception:
+            raise KanbanException(418, 'Упс, что-то сломалось!')
+        return res
+
 
 class Desk(MainInnerClass):
     def __init__(self):
@@ -64,11 +77,15 @@ class Desk(MainInnerClass):
         query = DeskSQL.insert().values(
             desk_title=insertion.title
         )
-        new = database.execute(query)
-        return new
+        res = self._exception_catcher(query)
+        return res
 
-    def show_created(self, new):
-        new_record = self.desks_select.where(DeskSQL.c.desk_id == new)
+    def show_created(self, insertion, id: Optional = None):
+        if id:
+            new_record = self.desks_select.where(DeskSQL.c.desk_id == id)
+        else:
+            get_id = session.query(DeskSQL).filter(DeskSQL.c.desk_title == insertion.title).all()
+            new_record = self.desks_select.where(DeskSQL.c.desk_id == get_id[0][0])
         res = database.fetch_all(new_record)
         return res
 
@@ -77,7 +94,7 @@ class Desk(MainInnerClass):
         query = DeskSQL.update().where(DeskSQL.c.desk_id == desk_id).values(
             desk_title=insertion.title
         )
-        res = database.execute(query)
+        res = self._exception_catcher(query)
         return res
 
     def desk_delete(self, desk_id: int):
@@ -117,11 +134,15 @@ class Columns(MainInnerClass):
             column_order_num=order+1,
             desk_id=insertion.desk_id
         )
-        new = database.execute(query)
-        return new
+        res = self._exception_catcher(query)
+        return res
 
-    def show_created(self, new):
-        new_record = self.columns_select.where(ColumnSQL.c.column_id == new)
+    def show_created(self, insertion, id: Optional = None):
+        if id:
+            new_record = self.columns_select.where(ColumnSQL.c.column_id == id)
+        else:
+            get_id = session.query(ColumnSQL).filter(ColumnSQL.c.column_title == insertion.title).all()
+            new_record = self.columns_select.where(ColumnSQL.c.column_id == get_id[0][0])
         res = database.fetch_all(new_record)
         return res
 
@@ -131,7 +152,7 @@ class Columns(MainInnerClass):
             column_title=insertion.title,
             column_order_num=insertion.order_num
         )
-        res = database.execute(query)
+        res = self._exception_catcher(query)
         return res
 
     def column_delete(self, column_id: int):
@@ -174,11 +195,15 @@ class Card(MainInnerClass):
             column_id=insertion.column_id,
             desk_id=insertion.desk_id
         )
-        new = database.execute(query)
-        return new
+        res = self._exception_catcher(query)
+        return res
 
-    def show_created(self, new):
-        new_record = self.cards_select.where(CardSQL.c.card_id == new)
+    def show_created(self, insertion, id: Optional = None):
+        if id:
+            new_record = self.cards_select.where(CardSQL.c.card_id == id)
+        else:
+            get_id = session.query(CardSQL).filter(CardSQL.c.card_title == insertion.title).all()
+            new_record = self.cards_select.where(CardSQL.c.card_id == get_id[0][0])
         res = database.fetch_all(new_record)
         return res
 
@@ -191,7 +216,7 @@ class Card(MainInnerClass):
             card_order_num=insertion.order_num,
             column_id=insertion.column_id,
         )
-        res = database.execute(query)
+        res = self._exception_catcher(query)
         return res
 
     def card_delete(self, card_id: int):

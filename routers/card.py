@@ -23,8 +23,8 @@ async def get_card(card_id: int):
 @router.post('/create', response_model=List[CardBase], description='Создаём карточку')
 async def create_card(insertion: CardInsert):
     card = Card()
-    step = await card.card_create(insertion)
-    res = await card.show_created(step)
+    await card.card_create(insertion)
+    res = await card.show_created(insertion)
     return res
 
 
@@ -32,7 +32,7 @@ async def create_card(insertion: CardInsert):
 async def update_card(card_id: int, insertion: CardUpdate):
     card = Card()
     await card.card_update(card_id, insertion)
-    res = await card.show_created(card_id)
+    res = await card.show_created(insertion, card_id)
     return res
 
 
