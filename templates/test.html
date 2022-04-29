@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            background: coral;
+        }
+        div {
+            background: purple;
+        }
+        .insertDiv {
+            background: aquamarine;
+        }
+    </style>
+</head>
+<body>
+  <h1>Greeting</h1>
+  <div>col</div>
+  <div>col2</div>
+  <button class="rqs">click</button>
+
+    <div class="baty">nothing</div>
+
+</body>
+<script>
+    let parentTag = document.querySelector(".baty");
+    let rqsBut = document.querySelector(".rqs");
+
+    const resp = async () => {
+      let rsp = await fetch("http://127.0.0.1:8000/test2", {
+          method: "post",
+
+      });
+      let jsr = await rsp.json();
+      let inputValue = jsr["test"];
+      return inputValue
+    }
+
+    rqsBut.addEventListener("click", async () => {
+        let rsp = await resp();
+
+        let newDiv = document.createElement("div");
+        newDiv.className = "insertDiv";
+
+
+        // <div class="insertDiv"></div>
+        newDiv.innerHTML = rsp;
+        parentTag.appendChild(newDiv);
+    });
+
+</script>
+</html>

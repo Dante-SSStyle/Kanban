@@ -3,7 +3,7 @@ import databases
 import sqlalchemy
 from sqlalchemy import Column, func, Integer, String, Date, ForeignKey, Text, create_engine, MetaData
 from sqlalchemy.orm import Session
-from db.exceptions import KanbanException
+from exceptions.exceptions import KanbanException
 
 
 if not os.path.exists('db/url.txt'):

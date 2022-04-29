@@ -2,7 +2,7 @@ from typing import Optional
 from sqlalchemy import func
 from asyncpg.exceptions import ForeignKeyViolationError, UniqueViolationError
 from db import session, ColumnSQL, DeskSQL, CardSQL, database
-from db.exceptions import KanbanException
+from exceptions.exceptions import KanbanException
 
 
 class MainInnerClass:
@@ -69,7 +69,7 @@ class Desk(MainInnerClass):
 
     def desk_read(self, desk_id: int):
         res = session.query(DeskSQL, ColumnSQL, CardSQL).join(ColumnSQL, DeskSQL.c.desk_id == ColumnSQL.c.desk_id)\
-            .join(CardSQL, ColumnSQL.c.column_id == CardSQL.c.column_id).filter(DeskSQL.c.desk_id == desk_id).all()
+            .join(CardSQL, ColumnSQL.c.column_id == CardSQL.c.column_id, isouter=True).filter(DeskSQL.c.desk_id == desk_id).all()
         result = self._desk_check_res(res, desk_id)
         return result
 

@@ -10,7 +10,7 @@ class DeskBase(BaseModel):
 
 
 class DeskFull(BaseModel):
-    desk_id: int
+    desk_id: int = None
     desk_title: str
     desk_create_date: date
     desk_update_date: date

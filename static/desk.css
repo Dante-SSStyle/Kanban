@@ -1,0 +1,103 @@
+body {
+    background: rgba(0, 0, 255, 0.33);
+}
+h1 {
+    color: rgba(0, 0, 255, 0.5);
+    font-family: Trattatello;
+    background: linear-gradient(33deg, rgba(0, 0, 255, 0), rgba(0, 0, 255, 0.5));
+    margin-bottom:-37px;
+}
+.desk {
+    height: 666px;
+    padding: 20px;
+    background: rgba(128, 200, 255, 0.75);
+    border:2px solid rgba(0, 0, 255, 0.5);
+    border-radius: 5%;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+h3 {
+    margin: auto;
+}
+.window {
+    border: 2px solid black;
+    border-radius: 5%;
+    background: lightblue;
+    width: 300px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 250px;
+    align-items: center;
+    padding: 15px;
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+}
+.window:target {
+    display: flex;
+    flex-direction: column; }
+input {
+    margin: 5px;
+    height: 20px;
+    width: 200px;
+}
+.table {
+    height: 555px;
+    width: 250px;
+    float:left;
+    //display: inline-block;//
+    font-family: Comic Sans, cursive;
+    background: white;
+    margin-top: -10px;
+    border: 2px solid black;
+    padding: 10px;
+    margin: 10px;
+    overflow: auto;
+}
+.card {
+    overflow: auto;
+    padding: 5px;
+    height: 200px;
+    font-family: Georgia, serif;
+    background: rgba(0, 0, 255, 0.25);
+    border:2px solid rgba(0, 0, 255, 0.5);
+    border-radius: 10%;
+    word-break: break-all;
+}
+.a-create {
+    width: 30px;
+    height: 30px;
+    display: block;
+    margin-left: 96%;
+    margin-top: 0px;
+    margin-bottom: 30px;
+    font-size: 25px;
+    background: lightcyan;
+    border: 2px solid black;
+    border-radius: 5%;
+    text-align:center;
+    text-decoration: none;
+}
+.a-delete {
+    width: 25px;
+    height: 25px;
+    display: block;
+    margin-left: 90%;
+    margin-top: 0px;
+    margin-bottom: -25px;
+    font-size: 25px;
+    background: lightcyan;
+    border: 2px solid black;
+    border-radius: 25%;
+    text-align:center;
+    text-decoration: none;
+}
+button:hover {
+    background: rgba(0, 0, 255, 0.1);
+}
