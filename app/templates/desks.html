@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', path='/desks.css') }}">
+    <meta charset="UTF-8">
+    <title>Кабан</title>
+    <style>
+        .desk {
+            background: cornflowerblue;
+        }
+        main {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+
+</head>
+<body>
+    <h1>План Канбан</h1>
+
+    <div class="desks">
+        <div class="desks-list">
+
+        {% for i in res %}
+            <a class="desk" href="http://localhost:8000/desks/get?desk_id={{i.desk_id}}">
+              {{i.desk_title}}
+            </a>
+        {% endfor %}
+
+        </div>
+
+        <button class="create-desk button">Создать доску</button>
+
+    </div>
+
+</body>
+</html>

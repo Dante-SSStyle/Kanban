@@ -1,13 +1,15 @@
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+from fastapi.middleware.cors import CORSMiddleware
 from db import database
 from routers import desk_router, card_router, column_router
-from fastapi.staticfiles import StaticFiles
 from fastapi import APIRouter, Request, Query
-from fastapi.templating import Jinja2Templates
 from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from fastapi.responses import PlainTextResponse, JSONResponse, RedirectResponse
-from fastapi.middleware.cors import CORSMiddleware
+
+allow_url = ["desk", "all_desks", "card"]
 
 app = FastAPI(
     title='Kanban',
@@ -47,29 +49,28 @@ app.include_router(
 app.mount('/static', StaticFiles(directory='static'), name='static')
 templates = Jinja2Templates(directory="templates")
 
-
-@app.exception_handler(StarletteHTTPException)
-async def http_exception_handler(request, exc):
-    return JSONResponse({"detail": str(exc.detail)}, status_code=exc.status_code)
-
-
-@app.exception_handler(RequestValidationError)
-async def validation_exception_handler(request, exc):
-    return JSONResponse({"detail": str("lox")}, status_code=400)
-
-@app.get("/")
-def test():
-    return RedirectResponse("http://127.0.0.1:8000/desks/getall")
+# Перехват дефолтных ошибок
+# @app.exception_handler(StarletteHTTPException)
+# async def http_exception_handler(request, exc):
+#     return JSONResponse({"detail": str(exc.detail)}, status_code=exc.status_code)
+#
+#
+# @app.exception_handler(RequestValidationError)
+# async def validation_exception_handler(request, exc):
+#     return JSONResponse({"detail": str("lox")}, status_code=400)
+#
 
 
 @app.get("/test")
-def test(request: Request):
-    return templates.TemplateResponse("test.html", {"request": request})
+def greet():
+    return RedirectResponse("http://127.0.0.1:8000/desks/getall")
 
 
-@app.get("/test2")
-def test2():
-    return {"test": "lox"}
+
+@app.get("/")
+def test():
+    return "Salyut!"
+    # return RedirectResponse("http://127.0.0.1:8000/desks/getall")
 
 
 @app.on_event('startup')
