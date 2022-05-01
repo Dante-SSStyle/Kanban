@@ -1,13 +1,13 @@
 from typing import List
 from fastapi import APIRouter
-from app.classes import Card
-from app.models import CardInsert, CardUpdate, CardBase
+from classes import Card
+from models import CardInsert, CardUpdate, CardBase
 
 router = APIRouter()
 
 
 @router.get('/all', response_model=List[CardBase], description='Получаем карты')
-async def get_all():
+async def get_all_cards():
     card = Card()
     res = await card.card_read_all()
     return res

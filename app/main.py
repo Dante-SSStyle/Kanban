@@ -9,7 +9,6 @@ from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from fastapi.responses import PlainTextResponse, JSONResponse, RedirectResponse
 
-allow_url = ["desk", "all_desks", "card"]
 
 app = FastAPI(
     title='Kanban',
@@ -63,7 +62,7 @@ templates = Jinja2Templates(directory="templates")
 
 @app.get("/test")
 def greet():
-    return RedirectResponse("http://127.0.0.1:8000/desks/getall")
+    return RedirectResponse("http://127.0.0.1:8022/desks/all")
 
 
 

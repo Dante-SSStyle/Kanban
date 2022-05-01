@@ -2,9 +2,9 @@ import databases
 import sqlalchemy
 from sqlalchemy import Column, func, Integer, String, Date, ForeignKey, Text, create_engine, MetaData
 from sqlalchemy.orm import Session
-from app.exceptions.exceptions import KanbanException
 from starlette.config import Config
 from starlette.datastructures import Secret
+from exceptions import KanbanException
 
 try:
     config = Config(".env")

@@ -1,13 +1,13 @@
 from typing import List
 from fastapi import APIRouter
-from app.classes import Columns
-from app.models import ColumnInsert, ColumnUpdate, ColumnBase, ColumnFull
+from classes import Columns
+from models import ColumnInsert, ColumnUpdate, ColumnBase, ColumnFull
 
 router = APIRouter()
 
 
 @router.get('/all', response_model=List[ColumnBase], description='Получаем столбцы доски')
-async def get_all():
+async def get_all_columns():
     column = Columns()
     res = await column.column_read_all()
     return res

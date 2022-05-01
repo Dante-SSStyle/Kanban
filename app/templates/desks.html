@@ -8,6 +8,7 @@
         .desk {
             background: cornflowerblue;
         }
+
         main {
             display: flex;
             flex-direction: column;
@@ -18,22 +19,46 @@
 
 </head>
 <body>
-    <h1>План Канбан</h1>
+<h1>План Канбан</h1>
 
-    <div class="desks">
-        <div class="desks-list">
+<div class="desks">
+    <div class="desks-list">
 
-        {% for i in res %}
-            <a class="desk" href="http://localhost:8000/desks/get?desk_id={{i.desk_id}}">
-              {{i.desk_title}}
-            </a>
+        {% for i in desks_list %}
+        <a class="desk" href="http://localhost:8022/desks?desk_id={{i.desk_id}}">
+            {{i.desk_title}}
+        </a>
         {% endfor %}
-
-        </div>
-
-        <button class="create-desk button">Создать доску</button>
 
     </div>
 
+    <button class="create-desk button">Создать доску</button>
+
+</div>
+
 </body>
+<script>
+
+    const createDeskRequest = async (deskTitle) => {
+        const response = await fetch('http://localhost:8022/desks',
+            {
+                method: 'post',
+                headers: {'Content-Type': 'application/json;charset=utf-8'},
+                body: JSON.stringify({"title": deskTitle})
+            }
+        );
+        return await response.json();
+
+    }
+
+
+    const createDeskButton = document.querySelector('.create-desk');
+    createDeskButton.addEventListener('click', async () => {
+        const deskTitle = prompt("Название доски", "Новая доска");
+        const newDesk = await createDeskRequest(deskTitle);
+        console.log(newDesk) // todo проверять ошибки
+        document.location.reload();
+    });
+
+</script>
 </html>
