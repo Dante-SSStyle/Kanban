@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  fastapi:
+    build: .
+    command: uvicorn main:app --reload --host 0.0.0.0
+    restart: always
+    volumes:
+      - ./app:/app
+    ports:
+      - 8022:8000
+    depends_on:
+        - db
+  db:
+    image: postgres:13-alpine
+    restart: always
+    volumes:
+      - ./postgresql:/var/lib/postgresql/data/
+    env_file:
+      - ./app/.env
+    ports:
+      - 5432:5432

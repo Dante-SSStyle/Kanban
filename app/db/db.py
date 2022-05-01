@@ -1,16 +1,22 @@
-import os
 import databases
 import sqlalchemy
 from sqlalchemy import Column, func, Integer, String, Date, ForeignKey, Text, create_engine, MetaData
 from sqlalchemy.orm import Session
-from exceptions.exceptions import KanbanException
+from starlette.config import Config
+from starlette.datastructures import Secret
+from exceptions import KanbanException
 
-
-if not os.path.exists('db/url.txt'):
-    raise KanbanException(400, 'Не найден файл с url базы данных')
-
-with open('db/url.txt', 'r') as f:
-    DATABASE_URL = f.readline().strip()
+try:
+    config = Config(".env")
+    POSTGRES_USER = config("POSTGRES_USER", cast=str)
+    POSTGRES_PASSWORD = config("POSTGRES_PASSWORD", cast=Secret)
+    POSTGRES_SERVER = config("POSTGRES_SERVER", cast=str, default="postgresql")
+    POSTGRES_PORT = config("POSTGRES_PORT", cast=str, default="5432")
+    POSTGRES_DB = config("POSTGRES_DB", cast=str)
+    DATABASE_URL = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_SERVER}:{POSTGRES_PORT}/{POSTGRES_DB}"
+# todo ловить конкретную ошибку
+except Exception:
+    raise KanbanException(400, 'Не найден .env файл с авторизационными данными')
 
 database = databases.Database(DATABASE_URL)
 engine = create_engine(DATABASE_URL)

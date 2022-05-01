@@ -1,3 +1,7 @@
-db/url.txt
+app/db/url.txt
 .idea
-/venv
+venv
+penv
+postgresql
+app/.env
+restart_container.sh

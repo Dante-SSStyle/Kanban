@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', path='/desks.css') }}">
+    <meta charset="UTF-8">
+    <title>Кабан</title>
+    <style>
+        .desk {
+            background: cornflowerblue;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+
+</head>
+<body>
+<h1>План Канбан</h1>
+
+<div class="desks">
+    <div class="desks-list">
+
+        {% for i in desks_list %}
+        <a class="desk" href="http://localhost:8022/desks?desk_id={{i.desk_id}}">
+            {{i.desk_title}}
+        </a>
+        {% endfor %}
+
+    </div>
+
+    <button class="create-desk button">Создать доску</button>
+
+</div>
+
+</body>
+<script>
+
+    const createDeskRequest = async (deskTitle) => {
+        const response = await fetch('http://localhost:8022/desks',
+            {
+                method: 'post',
+                headers: {'Content-Type': 'application/json;charset=utf-8'},
+                body: JSON.stringify({"title": deskTitle})
+            }
+        );
+        return await response.json();
+
+    }
+
+
+    const createDeskButton = document.querySelector('.create-desk');
+    createDeskButton.addEventListener('click', async () => {
+        const deskTitle = prompt("Название доски", "Новая доска");
+        const newDesk = await createDeskRequest(deskTitle);
+        console.log(newDesk) // todo проверять ошибки
+        document.location.reload();
+    });
+
+</script>
+</html>
