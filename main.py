@@ -57,19 +57,34 @@ async def http_exception_handler(request, exc):
 async def validation_exception_handler(request, exc):
     return JSONResponse({"detail": str("lox")}, status_code=400)
 
+
 @app.get("/")
 def test():
     return RedirectResponse("http://127.0.0.1:8000/desks/getall")
 
+@app.post("/xyi")
+def xyi():
+    return "xyi"
 
 @app.get("/test")
 def test(request: Request):
+    # column_id card_id card_name column_name card_created_at column_created_at
+
+    colmns = [
+
+        {
+            "id": 1,
+            "name": "any",
+            "cards": [
+                {
+                    "id": 1,
+                    "name": "create frontend",
+                    "desk_id": 2,
+                }
+            ]
+        }
+    ]
     return templates.TemplateResponse("test.html", {"request": request})
-
-
-@app.get("/test2")
-def test2():
-    return {"test": "lox"}
 
 
 @app.on_event('startup')
