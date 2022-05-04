@@ -1,7 +1,7 @@
 from typing import List
 from fastapi import APIRouter
-from classes import Columns
-from models import ColumnInsert, ColumnUpdate, ColumnBase, ColumnFull
+from app.classes import Columns
+from app.models import ColumnInsert, ColumnUpdate, ColumnBase, ColumnFull
 
 router = APIRouter()
 

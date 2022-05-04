@@ -1,16 +1,222 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    <link rel="stylesheet" href="{{ url_for('static', path='/desk.css') }}">
     <meta charset="UTF-8">
-    <title>Current desk</title>
+    <title>{{ desk_info[0].desk_title }}</title>
 </head>
-<body>
+<body vlink="#000">
     <main>
-        <h1>Доска {{ desk_info.desk_title }}</h1>
-        <div>xcvxc</div>
-        <div>xcvxc</div>
-
-        <a href="http://localhost:8022/desks/all">На главную</a>
+        <!--    Всплывающее окно для создания новой карты   -->
+        <div id="window" class="window">
+            <h3>Новая карта</h3>
+            <form id="form">
+                <label style="display: flex; flex-direction: column; align-items: center">
+                    <input  id="title" placeholder="Название" required><br>
+                    <textarea style="width: 500px; height: 150px" id="content" required></textarea>
+                </label>
+                <label style="display: flex; flex-direction: column; align-items: center">
+                    {% for i in desk_info %}
+                        <input type="radio", name="name" id="column_id" value="{{i.column_id}}" checked>{{i.column_title}}
+                    {% endfor %}
+                    <br>
+                    <input type="date" id="end_date" value="2222-12-12">Дата окончания<br>
+                </label>
+                <a onclick="createcard({{desk_info[0].desk_id}})">Создать</a>
+                <a href="#">Отмена</a>
+            </form>
+        </div>
+        <h1>{{ desk_info[0].desk_title }}
+            <button style="float: right; margin-top: 10px" onclick="createcolumn({{desk_info[0].desk_id}})">Создать</button>
+        </h1>
+        <!--    Доска   -->
+        <div class="desk">
+            {% for i in desk_info %}
+            {% if i.column_id %}
+                <!--    Колонки     -->
+                <div class="table">
+                    <button style="float: left" onclick="updcolumn({{i.column_id}}, {{i.column_order_num}})">Редактировать</button>
+                    <button style="float: right" onclick="deletecolumn({{ i.column_id }})">Удалить</button>
+                    <br><hr>
+                    <h3>{{ i.column_title }}</h3><hr>
+                    {% for j in i.cards %}
+                    <!--    Всплывающие окна для редактирования каждой карточки     -->
+                    <div class="window" id="window2">
+                        <h3>Редактирование карты</h3>
+                        <form id="form2">
+                            <label style="display: flex; flex-direction: column; align-items: center">
+                                <input  id="newtitle" placeholder="Новое название" required><br>
+                                <textarea style="width: 500px; height: 150px;" id="newcontent"  required></textarea>
+                            </label>
+                            <label style="display: flex; flex-direction: column; align-items: center">
+                                {% for i in desk_info %}
+                                    <input type="radio" name="name" id="newcolumnid" value="{{i.column_id}}" checked>{{i.column_title}}
+                                {% endfor %}
+                                <br>
+                                <input type="date" id="newend_date" value="{{j.end_date}}">Дата окончания<br>
+                            </label>
+                            <a onclick="updcard()">Обновить</a>
+                            <a href="#">Отмена</a>
+                        </form>
+                    </div>
+                        <!-- Карточки   -->
+                        <div class="card">
+                            <button style="float: right" onclick="deletecard({{j.card_id}})" >-</button>
+                            <a style="float: left; background: #E9E9ED; border: 1px solid grey; border-radius: 25%"
+                               href="#window2" onclick="order_numb={{j.card_order_num}}; desk_idg={{j.card_id}}">...</a>
+                            <h3>{{ j.card_title }}</h3>
+                            <p>{{ j.content }}</p><hr>
+                            <p style="font-size: 12px">Создано: {{ j.card_create_date }}</p>
+                            {% if j.end_date %}
+                            <p style="font-size: 12px">Окончание: {{ j.end_date }}</p>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                        <a href="#window">Создать карточку</a>
+                </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <!--порт 8022        -->
+        <a href="http://localhost:8000/desks/all">На главную</a>
     </main>
 </body>
+<script>
+
+
+    const createCardRequest = async (desk_id, title, content, end_date, column_id) => {
+        <!--порт 8022        -->
+        const response = await fetch('http://localhost:8000/cards/',
+            {
+                method: 'post',
+                headers: {'Content-Type': 'application/json;charset=utf-8'},
+                body: JSON.stringify({"title": title,
+                    "content": content,
+                    "end_date": end_date,
+                    "column_id2": column_id,
+                    "desk_id3": desk_id})
+            }
+        );
+        return await response.json();
+
+    }
+
+    const createColumnRequest = async (desk_id, columnNew) => {
+        <!--порт 8022        -->
+        const response = await fetch('http://localhost:8000/columns/',
+            {
+                method: 'post',
+                headers: {'Content-Type': 'application/json;charset=utf-8'},
+                body: JSON.stringify({"title": columnNew, "desk_id2": desk_id})
+            }
+        );
+        return await response.json();
+
+    }
+
+    const renameColumnRequest = async (column_id, columnNewTitle, column_order_num) => {
+        <!--порт 8022        -->
+        const response = await fetch('http://localhost:8000/columns/?column_id='+column_id,
+            {
+                method: 'put',
+                headers: {'Content-Type': 'application/json;charset=utf-8'},
+                body: JSON.stringify({"title": columnNewTitle, "order_num": column_order_num})
+            }
+        );
+        return await response.json();
+    }
+
+    const updateCardRequest = async (card_id, title, content, end_date, column_id, order_num) => {
+        <!--порт 8022        -->
+        const response = await fetch('http://localhost:8000/cards/?card_id='+card_id,
+            {
+                method: 'put',
+                headers: {'Content-Type': 'application/json;charset=utf-8'},
+                body: JSON.stringify({"title": title,
+                    "content": content,
+                    "end_date": end_date,
+                    "order_num": order_num,
+                    "column_id2": column_id})
+            }
+        );
+        return await response.json();
+    }
+
+    const deleteCardRequest = async (card_id) => {
+        <!--порт 8022        -->
+        const response = await fetch('http://localhost:8000/cards/?card_id='+card_id,
+            {
+                method: 'delete',
+                headers: {'Content-Type': 'application/json;charset=utf-8'}
+            }
+        );
+        return await response.json();
+    }
+
+    const deleteColumnRequest = async (column_id) => {
+        <!--порт 8022        -->
+        const response = await fetch('http://localhost:8000/columns/?column_id='+column_id,
+            {
+                method: 'delete',
+                headers: {'Content-Type': 'application/json;charset=utf-8'}
+            }
+        );
+        return await response.json();
+    }
+
+    async function createcolumn(desk_id) {
+        const columnNew = prompt('Название колонки', 'Новая колонка');
+        const newColumn = await createColumnRequest(desk_id, columnNew);
+        console.log(newColumn) // todo проверять ошибки
+        document.location.reload();
+    }
+
+    async function deletecolumn(column_id) {
+        let check = confirm('Вы уверены?')
+        if (check) {
+            const delColumn = await deleteColumnRequest(column_id);
+            console.log(delColumn) // todo проверять ошибки
+            document.location.reload();
+        }
+    }
+
+    async function updcolumn(column_id, column_order_num) {
+        const columnNewTitle = prompt('Название колонки', 'Новое имя');
+        const updColumn = await renameColumnRequest(column_id, columnNewTitle, column_order_num);
+        console.log(updColumn) // todo проверять ошибки
+        document.location.reload();
+    }
+
+    async function createcard(desk_id) {
+        let form = document.forms.form;
+        let title = form.elements.title;
+        let content = form.elements.content;
+        let end_date = form.elements.end_date;
+        let column_id = form.elements.column_id;
+        const newCard = await createCardRequest(desk_id, title.value, content.value, end_date.value, column_id.value);
+        console.log(newCard) // todo проверять ошибки
+        document.location.href='http://localhost:8000/desks/?desk_id='+{{desk_info[0].desk_id}}
+    }
+
+    async function deletecard(card_id) {
+        let check = confirm('Вы уверены?')
+        if (check) {
+            const delCard = await deleteCardRequest(card_id);
+            console.log(delCard) // todo проверять ошибки
+            document.location.reload();
+        }
+    }
+
+    async function updcard() {
+        let form2 = document.forms.form2;
+        let title = form2.elements.newtitle;
+        let content = form2.elements.newcontent;
+        let end_date = form2.elements.newend_date;
+        let column_id = form2.elements.newcolumnid;
+        const updCard = await updateCardRequest(desk_idg, title.value, content.value, end_date.value, column_id.value, order_numb);
+        console.log(updCard) // todo проверять ошибки
+        document.location.href='http://localhost:8000/desks/?desk_id='+{{desk_info[0].desk_id}}
+    }
+
+</script>
 </html>

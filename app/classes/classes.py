@@ -1,8 +1,8 @@
 from typing import Optional
 from sqlalchemy import func
 from asyncpg.exceptions import ForeignKeyViolationError, UniqueViolationError
-from db import session, ColumnSQL, DeskSQL, CardSQL, database
-from exceptions import KanbanException
+from app.db import session, ColumnSQL, DeskSQL, CardSQL, database
+from app.exceptions import KanbanException
 
 
 class MainInnerClass:
@@ -22,11 +22,11 @@ class MainInnerClass:
 
     def _desk_check_res(self, res, desk_id):
         self._content_check(DeskSQL, DeskSQL.c.desk_id == desk_id)
-        if not session.query(DeskSQL, ColumnSQL).join(ColumnSQL, DeskSQL.c.desk_id == ColumnSQL.c.desk_id)\
+        if not session.query(DeskSQL, ColumnSQL).join(ColumnSQL, DeskSQL.c.desk_id == ColumnSQL.c.desk_id2)\
                 .filter(DeskSQL.c.desk_id == desk_id).all():
             return session.query(DeskSQL).filter(DeskSQL.c.desk_id == desk_id).all()
         if not res:
-            return session.query(DeskSQL, ColumnSQL).join(ColumnSQL, DeskSQL.c.desk_id == ColumnSQL.c.desk_id)\
+            return session.query(DeskSQL, ColumnSQL).join(ColumnSQL, DeskSQL.c.desk_id == ColumnSQL.c.desk_id2)\
                 .filter(DeskSQL.c.desk_id == desk_id).all()
         return res
     '''Проверка и установка позиции столбца/карточки'''
@@ -56,6 +56,76 @@ class MainInnerClass:
             raise KanbanException(418, 'Упс, что-то сломалось!')
         return res
 
+    def _createform(self, data):
+        response = []
+        cards = []
+        columns = []
+        form = {
+            'desk_id': int,
+            'desk_title': str,
+            'column_id': None,
+            'column_title': None,
+            'column_order_num': None,
+            'cards': cards
+        }
+        card_form = {
+            "card_id": int,
+            "card_title": str,
+            "content": str,
+            "card_create_date": data,
+            "card_update_date": data,
+            "end_date": data,
+            "card_order_num": int
+        }
+
+        for dictnr in data:
+            # print(response, '\n')
+            form.update({
+                'desk_id': dictnr.desk_id,
+                'desk_title': dictnr.desk_title
+            })
+            if 'column_id' in dictnr.keys():
+                if dictnr.column_id not in columns:
+                    cards = []
+                    if form['column_id']:
+                        response.append(form.copy())
+                    form.update({'cards': cards})
+                    columns.append(dictnr.column_id)
+                    form.update({
+                        'column_id': dictnr.column_id,
+                        'column_title': dictnr.column_title,
+                        'column_order_num': dictnr.column_order_num
+                    })
+                    if 'card_id' in dictnr.keys():
+                        if dictnr.card_id:
+                            card_form.update({
+                                "card_id": dictnr.card_id,
+                                "card_title": dictnr.card_title,
+                                "content": dictnr.content,
+                                "card_create_date": dictnr.card_create_date,
+                                "card_update_date": dictnr.card_update_date,
+                                "end_date": dictnr.end_date,
+                                "card_order_num": dictnr.card_order_num
+                            })
+                            cards.append(card_form.copy())
+                            form.update({'cards': cards})
+                else:
+                    card_form.update({
+                        "card_id": dictnr.card_id,
+                        "card_title": dictnr.card_title,
+                        "content": dictnr.content,
+                        "card_create_date": dictnr.card_create_date,
+                        "card_update_date": dictnr.card_update_date,
+                        "end_date": dictnr.end_date,
+                        "card_order_num": dictnr.card_order_num
+                    })
+                    cards.append(card_form.copy())
+                    form.update({'cards': cards})
+
+        else:
+            response.append(form.copy())
+            # print(response,'\n')
+        return response
 
 class Desk(MainInnerClass):
     def __init__(self):
@@ -63,16 +133,17 @@ class Desk(MainInnerClass):
         self.desks_select = DeskSQL.select()
 
     def desk_read_all(self):
-        self._content_check(DeskSQL)
-        res = database.fetch_all(self.desks_select)
+        # self._content_check(DeskSQL)
+        res = database.fetch_all(self.desks_select.order_by(DeskSQL.c.desk_id))
         return res
 
     def desk_read(self, desk_id: int):
         res = session.query(DeskSQL, ColumnSQL, CardSQL)\
-            .join(ColumnSQL, DeskSQL.c.desk_id == ColumnSQL.c.desk_id)\
-            .join(CardSQL, ColumnSQL.c.column_id == CardSQL.c.column_id, isouter=True)\
-            .filter(DeskSQL.c.desk_id == desk_id).all()
-        result = self._desk_check_res(res, desk_id)
+            .join(ColumnSQL, DeskSQL.c.desk_id == ColumnSQL.c.desk_id2)\
+            .join(CardSQL, ColumnSQL.c.column_id == CardSQL.c.column_id2, isouter=True)\
+            .filter(DeskSQL.c.desk_id == desk_id).order_by(ColumnSQL.c.column_order_num).all()
+        check = self._desk_check_res(res, desk_id)
+        result = self._createform(check)
         return result
 
     def desk_create(self, insertion):
@@ -122,19 +193,19 @@ class Columns(MainInnerClass):
         return res
 
     def column_read(self, column_id: int):
-        res = session.query(ColumnSQL, CardSQL).join(CardSQL, ColumnSQL.c.column_id == CardSQL.c.column_id)\
+        res = session.query(ColumnSQL, CardSQL).join(CardSQL, ColumnSQL.c.column_id == CardSQL.c.column_id2)\
             .filter(ColumnSQL.c.column_id == column_id).all()
         result = self._column_check_res(res, column_id)
         return result
 
     def column_create(self, insertion):
         get_order = session.query(func.max(ColumnSQL.c.column_order_num))\
-            .filter(ColumnSQL.c.desk_id == insertion.desk_id).all()
+            .filter(ColumnSQL.c.desk_id2 == insertion.desk_id2).all()
         order = self._column_check_order(get_order)
         query = ColumnSQL.insert().values(
             column_title=insertion.title,
             column_order_num=order+1,
-            desk_id=insertion.desk_id
+            desk_id2=insertion.desk_id2
         )
         res = self._exception_catcher(query)
         return res
@@ -187,15 +258,15 @@ class Card(MainInnerClass):
 
     def card_create(self, insertion):
         get_order = session.query(func.max(CardSQL.c.card_order_num))\
-            .filter(CardSQL.c.column_id == insertion.column_id, CardSQL.c.desk_id == insertion.desk_id).all()
+            .filter(CardSQL.c.column_id2 == insertion.column_id2, CardSQL.c.desk_id3 == insertion.desk_id3).all()
         order = self._card_check_order(get_order)
         query = CardSQL.insert().values(
             card_title=insertion.title,
             content=insertion.content,
             end_date=insertion.end_date,
             card_order_num=order+1,
-            column_id=insertion.column_id,
-            desk_id=insertion.desk_id
+            column_id2=insertion.column_id2,
+            desk_id3=insertion.desk_id3
         )
         res = self._exception_catcher(query)
         return res
@@ -216,7 +287,7 @@ class Card(MainInnerClass):
             content=insertion.content,
             end_date=insertion.end_date,
             card_order_num=insertion.order_num,
-            column_id=insertion.column_id,
+            column_id2=insertion.column_id2,
         )
         res = self._exception_catcher(query)
         return res

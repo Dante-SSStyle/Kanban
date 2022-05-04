@@ -2,8 +2,8 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
-from db import database
-from routers import desk_router, card_router, column_router
+from app.db import database
+from app.routers import desk_router, card_router, column_router
 from fastapi import APIRouter, Request, Query
 from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
@@ -45,7 +45,7 @@ app.include_router(
     tags=['column'],
     dependencies=[]
 )
-app.mount('/static', StaticFiles(directory='static'), name='static')
+app.mount('/app/static', StaticFiles(directory='app/static'), name='static')
 templates = Jinja2Templates(directory="templates")
 
 # Перехват дефолтных ошибок
@@ -60,16 +60,16 @@ templates = Jinja2Templates(directory="templates")
 #
 
 
-@app.get("/test")
-def greet():
-    return RedirectResponse("http://127.0.0.1:8022/desks/all")
+# @app.get("/test")
+# def greet():
+#     return RedirectResponse("http://127.0.0.1:8022/desks/all")
 
 
 
-@app.get("/")
-def test():
-    return "Salyut!"
-    # return RedirectResponse("http://127.0.0.1:8000/desks/getall")
+# @app.get("/")
+# def test():
+#     return "Salyut!"
+#     # return RedirectResponse("http://127.0.0.1:8000/desks/getall")
 
 
 @app.on_event('startup')

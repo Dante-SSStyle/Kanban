@@ -5,7 +5,7 @@ h1 {
     color: rgba(0, 0, 255, 0.5);
     font-family: Trattatello;
     background: linear-gradient(33deg, rgba(0, 0, 255, 0), rgba(0, 0, 255, 0.5));
-    margin-bottom:-37px;
+    /*margin-bottom:-37px;*/
 }
 .desk {
     height: 666px;
@@ -18,14 +18,29 @@ h1 {
 }
 h3 {
     margin: auto;
+    text-align: center;
+}
+a {
+    display: block;
+    margin: auto;
+    height: 20px;
+    font-size: 20px;
+    animation-name: title-color;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    font-family: Comic Sans, cursive;
+    background: cornflowerblue;
+    border: 2px solid black;
+    border-radius: 5%;
+    text-align:center;
+    text-decoration: none;
 }
 .window {
     border: 2px solid black;
     border-radius: 5%;
     background: lightblue;
-    width: 300px;
-    height: 150px;
-    display: flex;
+    width: 600px;
+    height: 300px;
     flex-direction: column;
     margin: auto;
     margin-top: 250px;
@@ -38,6 +53,7 @@ h3 {
     bottom: 0;
     left: 0;
     margin: auto;
+    overflow-x: auto;
 }
 .window:target {
     display: flex;
@@ -51,31 +67,32 @@ input {
     height: 555px;
     width: 250px;
     float:left;
-    //display: inline-block;//
+    /*display: inline-block;*/
     font-family: Comic Sans, cursive;
     background: white;
-    margin-top: -10px;
+    /*margin-top: -10px;*/
     border: 2px solid black;
     padding: 10px;
     margin: 10px;
     overflow: auto;
 }
 .card {
-    overflow: auto;
     padding: 5px;
     height: 200px;
     font-family: Georgia, serif;
     background: rgba(0, 0, 255, 0.25);
     border:2px solid rgba(0, 0, 255, 0.5);
     border-radius: 10%;
-    word-break: break-all;
+    white-space: normal;
+    word-wrap:break-word;
+    overflow: auto;
 }
 .a-create {
     width: 30px;
     height: 30px;
     display: block;
     margin-left: 96%;
-    margin-top: 0px;
+    margin-top: 0;
     margin-bottom: 30px;
     font-size: 25px;
     background: lightcyan;
@@ -89,7 +106,7 @@ input {
     height: 25px;
     display: block;
     margin-left: 90%;
-    margin-top: 0px;
+    margin-top: 0;
     margin-bottom: -25px;
     font-size: 25px;
     background: lightcyan;

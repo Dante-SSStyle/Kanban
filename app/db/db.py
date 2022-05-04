@@ -4,10 +4,10 @@ from sqlalchemy import Column, func, Integer, String, Date, ForeignKey, Text, cr
 from sqlalchemy.orm import Session
 from starlette.config import Config
 from starlette.datastructures import Secret
-from exceptions import KanbanException
+from app.exceptions import KanbanException
 
 try:
-    config = Config(".env")
+    config = Config("app/templates/.env")
     POSTGRES_USER = config("POSTGRES_USER", cast=str)
     POSTGRES_PASSWORD = config("POSTGRES_PASSWORD", cast=Secret)
     POSTGRES_SERVER = config("POSTGRES_SERVER", cast=str, default="postgresql")
@@ -39,7 +39,7 @@ ColumnSQL = sqlalchemy.Table(
     Column('column_create_date', Date, default=func.now(), nullable=False),
     Column('column_update_date', Date, default=func.now(), onupdate=func.now(), nullable=False),
     Column('column_order_num', Integer, nullable=False),
-    Column('desk_id', Integer, ForeignKey('desks.desk_id', ondelete="CASCADE"), nullable=False),
+    Column('desk_id2', Integer, ForeignKey('desks.desk_id', ondelete="CASCADE"), nullable=False),
 )
 CardSQL = sqlalchemy.Table(
     'cards',
@@ -51,8 +51,8 @@ CardSQL = sqlalchemy.Table(
     Column('card_update_date', Date, default=func.now(), onupdate=func.now(), nullable=False),
     Column('end_date', Date, default=None, nullable=True),
     Column('card_order_num', Integer, nullable=False),
-    Column('column_id', Integer, ForeignKey('columns.column_id', ondelete="CASCADE"), nullable=False),
-    Column('desk_id', Integer, ForeignKey('desks.desk_id', ondelete="CASCADE"), nullable=False),
+    Column('column_id2', Integer, ForeignKey('columns.column_id', ondelete="CASCADE"), nullable=False),
+    Column('desk_id3', Integer, ForeignKey('desks.desk_id', ondelete="CASCADE"), nullable=False),
 )
 
 metadata.create_all(engine)

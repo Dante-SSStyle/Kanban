@@ -1,7 +1,7 @@
 from typing import List
 from fastapi import APIRouter
-from classes import Card
-from models import CardInsert, CardUpdate, CardBase
+from app.classes import Card
+from app.models import CardInsert, CardUpdate, CardBase
 
 router = APIRouter()
 

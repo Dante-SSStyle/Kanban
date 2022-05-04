@@ -18,13 +18,12 @@ a {
     margin: auto;
     width: 500px;
     height: 50px;
-    display: block;
     font-size: 30px;
     animation-name: title-color;
     animation-duration: 3s;
     animation-iteration-count: infinite;
     font-family: Comic Sans, cursive;
-    background: white;
+    background: cornflowerblue;
     border: 2px solid black;
     border-radius: 5%;
     text-align:center;

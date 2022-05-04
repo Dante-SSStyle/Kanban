@@ -10,22 +10,28 @@ class DeskBase(BaseModel):
 
 
 class DeskFull(BaseModel):
+    # desk_id: int = None
+    # desk_title: str
+    # desk_create_date: date
+    # desk_update_date: date
+    # column_id: int = None
+    # column_title: str = None
+    # column_create_date: date = None
+    # column_update_date: date = None
+    # column_order_num: int = None
+    # card_id: int = None
+    # card_title: str = None
+    # content: str = None
+    # card_create_date: date = None
+    # card_update_date: date = None
+    # end_date: date = None
+    # card_order_num: int = None
     desk_id: int = None
     desk_title: str
-    desk_create_date: date
-    desk_update_date: date
     column_id: int = None
     column_title: str = None
-    column_create_date: date = None
-    column_update_date: date = None
     column_order_num: int = None
-    card_id: int = None
-    card_title: str = None
-    content: str = None
-    card_create_date: date = None
-    card_update_date: date = None
-    end_date: date = None
-    card_order_num: int = None
+    cards: list = None
 
 
 class ColumnFull(BaseModel):
@@ -34,7 +40,7 @@ class ColumnFull(BaseModel):
     column_create_date: date
     column_update_date: date
     column_order_num: int
-    desk_id: int
+    desk_id2: int
     card_id: int = None
     card_title: str = None
     content: str = None
@@ -50,7 +56,7 @@ class ColumnBase(BaseModel):
     column_create_date: date
     column_update_date: date
     column_order_num: int
-    desk_id: int
+    desk_id2: int
 
 
 class CardBase(BaseModel):
@@ -61,8 +67,8 @@ class CardBase(BaseModel):
     card_update_date: date
     end_date: date = None
     card_order_num: int
-    column_id: int
-    desk_id: int
+    column_id2: int
+    desk_id3: int
 
 
 class DeskInsert(BaseModel):
@@ -71,7 +77,7 @@ class DeskInsert(BaseModel):
 
 class ColumnInsert(BaseModel):
     title: str = Field(min_length=1, max_length=30)
-    desk_id: int
+    desk_id2: int
 
 
 class ColumnUpdate(BaseModel):
@@ -83,8 +89,8 @@ class CardInsert(BaseModel):
     title: str = Field(min_length=1, max_length=30)
     content: str = Field(min_length=0, max_length=250)
     end_date: date = None
-    column_id: int
-    desk_id: int
+    column_id2: int
+    desk_id3: int
 
 
 class CardUpdate(BaseModel):
@@ -92,4 +98,4 @@ class CardUpdate(BaseModel):
     content: str = Field(min_length=0, max_length=250)
     end_date: date = None
     order_num: int = Field(ge=1)
-    column_id: int
+    column_id2: int
