@@ -61,28 +61,14 @@ templates = Jinja2Templates(directory="templates")
 async def http_exception_handler(request, exc):
     return templates.TemplateResponse("error.html", {"request": request, "detail": str(exc.detail), "status_code": exc.status_code})
 
-@app.get("/tmp")
-def ttt():
+
+@app.get("/test")
+def test():
     return "ready!"
 
-@app.get("/dsk")
-def tt1():
-    return Desk.extract_all()
-
-@app.get("/dsk/{dsk_id}")
-def tt1(dsk_id: int):
-    return Desk.extract(DeskExtract(id=dsk_id))
-
-@app.post("/dsk")
-def tt2(desk: DeskCreate):
-    return Desk.create(desk)
-
-@app.delete("/dsk")
-def tt3(desk: DeskDelete):
-    return Desk.delete(desk)
 
 @app.get("/")
-def test():
+def index():
     return RedirectResponse(f"{HOST}/desks/all")
 
 

@@ -9,15 +9,20 @@
 <h1 id="h1">План Канбан</h1>
 
 <div class="desks">
+
+    <div style="background: darkred">
+        lox
+        {{host}}
+    </div>
     <div class="desks-list">
 
         {% for i in desks_list %}
 
-        <a class="desk" href="{{host}}/desks?desk_id={{i.desk_id}}">
-            {{i.desk_title}}
+        <a class="desk" href="{{host}}/desks/{{i.id}}">
+            {{i.title}}
         </a>
-        <button onclick="renameDesk('{{i.desk_id}}')">Удалить доску</button>
-        <button onclick="deleteDesk('{{i.desk_id}}')">Переименовать доску</button>
+        <button onclick="renameDesk('{{i.id}}')">Удалить доску</button>
+        <button onclick="deleteDesk('{{i.id}}')">Переименовать доску</button>
 
         {% endfor %}
 
@@ -44,7 +49,7 @@
     }
 
     const deleteDeskRequest = async (deskId) => {
-        const response = await fetch('{{host}}/desks/?desk_id='+deskId,
+        const response = await fetch('{{host}}/desks/' + deskId,
             {
                 method: 'delete',
                 headers: {'Content-Type': 'application/json;charset=utf-8'}
@@ -54,7 +59,7 @@
     }
 
     const renameDeskRequest = async (deskId, deskTitle) => {
-        const response = await fetch('{{host}}/desks/?desk_id='+deskId,
+        const response = await fetch('{{host}}/desks/' + deskId,
             {
                 method: 'put',
                 headers: {'Content-Type': 'application/json;charset=utf-8'},

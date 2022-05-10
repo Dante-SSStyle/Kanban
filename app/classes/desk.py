@@ -8,14 +8,6 @@ class Desk:
         self.db = session
 
     @classmethod
-    def extract_all(cls):
-        return session.query(DeskDB).all()
-
-    @classmethod
-    def extract(cls, desk: DeskExtract):
-        return session.query(DeskDB).filter(DeskDB.id == desk.id).first()
-
-    @classmethod
     def create(cls, desk: DeskCreate):
         dsk = DeskDB(title=desk.title)
         session.add(dsk)
@@ -26,4 +18,18 @@ class Desk:
     @classmethod
     def delete(cls, desk: DeskDelete):
         dsk = DeskDB(id=desk.id)
-        session.delete(dsk)
+        res = session.delete(dsk)
+        return res
+
+    @classmethod
+    def extract_all(cls):
+        return session.query(DeskDB).all()
+
+    @classmethod
+    def extract(cls, desk: DeskExtract):
+        return session.query(DeskDB).filter(DeskDB.id == desk.id).first()
+
+    @classmethod
+    def update(cls, desk: DeskUpdate):
+        res = session.query(DeskDB).filter(DeskDB.id == desk.id).update(DeskDB.title == desk.title)
+        return res
