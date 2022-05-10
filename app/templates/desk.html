@@ -3,7 +3,7 @@
 <head>
     <link rel="stylesheet" href="{{ url_for('static', path='/desk.css') }}">
     <meta charset="UTF-8">
-    <title>{{ desk_info[0].desk_title }}</title>
+    <title>{{ desk_info.desk_title }}</title>
 </head>
 <body vlink="#000">
     <main>
@@ -22,12 +22,12 @@
                     <br>
                     <input type="date" id="end_date" value="2222-12-12">Дата окончания<br>
                 </label>
-                <a onclick="createcard({{desk_info[0].desk_id}})">Создать</a>
+                <a onclick="createCard('{{desk_info.desk_id}}')">Создать</a>
                 <a href="#">Отмена</a>
             </form>
         </div>
-        <h1>{{ desk_info[0].desk_title }}
-            <button style="float: right; margin-top: 10px" onclick="createcolumn({{desk_info[0].desk_id}})">Создать</button>
+        <h1>{{ desk_info.desk_title }}
+            <button style="float: right; margin-top: 10px" onclick="createColumn('{{desk_info.desk_id}}')">Создать</button>
         </h1>
         <!--    Доска   -->
         <div class="desk">
@@ -35,8 +35,8 @@
             {% if i.column_id %}
                 <!--    Колонки     -->
                 <div class="table">
-                    <button style="float: left" onclick="updcolumn({{i.column_id}}, {{i.column_order_num}})">Редактировать</button>
-                    <button style="float: right" onclick="deletecolumn({{ i.column_id }})">Удалить</button>
+                    <button style="float: left" onclick="updateColumn('{{i.column_id}}', '{{i.column_order_num}}')">Редактировать</button>
+                    <button style="float: right" onclick="deleteColumn('{{ i.column_id }}')">Удалить</button>
                     <br><hr>
                     <h3>{{ i.column_title }}</h3><hr>
                     {% for j in i.cards %}
@@ -55,15 +55,15 @@
                                 <br>
                                 <input type="date" id="newend_date" value="{{j.end_date}}">Дата окончания<br>
                             </label>
-                            <a onclick="updcard()">Обновить</a>
+                            <a onclick="updateCard()">Обновить</a>
                             <a href="#">Отмена</a>
                         </form>
                     </div>
                         <!-- Карточки   -->
                         <div class="card">
-                            <button style="float: right" onclick="deletecard({{j.card_id}})" >-</button>
+                            <button style="float: right" onclick="deleteCard('{{j.card_id}}')" >-</button>
                             <a style="float: left; background: #E9E9ED; border: 1px solid grey; border-radius: 25%"
-                               href="#window2" onclick="order_numb={{j.card_order_num}}; desk_idg={{j.card_id}}">...</a>
+                               href="#window2" onclick="order_numb='{{j.card_order_num}}'; desk_idg='{{j.card_id}}'">...</a>
                             <h3>{{ j.card_title }}</h3>
                             <p>{{ j.content }}</p><hr>
                             <p style="font-size: 12px">Создано: {{ j.card_create_date }}</p>
@@ -77,37 +77,34 @@
             {% endif %}
             {% endfor %}
         </div>
-        <!--порт 8022        -->
-        <a href="http://localhost:8000/desks/all">На главную</a>
+        <a href="{{host}}/desks/all">На главную</a>
     </main>
 </body>
 <script>
 
 
-    const createCardRequest = async (desk_id, title, content, end_date, column_id) => {
-        <!--порт 8022        -->
-        const response = await fetch('http://localhost:8000/cards/',
+    const createCardRequest = async (deskId, title, content, endDate, columnId) => {
+        const response = await fetch('{{host}}/cards/',
             {
                 method: 'post',
                 headers: {'Content-Type': 'application/json;charset=utf-8'},
                 body: JSON.stringify({"title": title,
                     "content": content,
-                    "end_date": end_date,
-                    "column_id2": column_id,
-                    "desk_id3": desk_id})
+                    "end_date": endDate,
+                    "column_id": columnId,
+                    "desk_id": deskId})
             }
         );
         return await response.json();
 
     }
 
-    const createColumnRequest = async (desk_id, columnNew) => {
-        <!--порт 8022        -->
-        const response = await fetch('http://localhost:8000/columns/',
+    const createColumnRequest = async (deskId, columnName) => {
+        const response = await fetch('{{host}}/columns/',
             {
                 method: 'post',
                 headers: {'Content-Type': 'application/json;charset=utf-8'},
-                body: JSON.stringify({"title": columnNew, "desk_id2": desk_id})
+                body: JSON.stringify({"title": columnName, "desk_id": deskId})
             }
         );
         return await response.json();
@@ -115,8 +112,7 @@
     }
 
     const renameColumnRequest = async (column_id, columnNewTitle, column_order_num) => {
-        <!--порт 8022        -->
-        const response = await fetch('http://localhost:8000/columns/?column_id='+column_id,
+        const response = await fetch('{{host}}/columns/?column_id='+column_id,
             {
                 method: 'put',
                 headers: {'Content-Type': 'application/json;charset=utf-8'},
@@ -127,8 +123,7 @@
     }
 
     const updateCardRequest = async (card_id, title, content, end_date, column_id, order_num) => {
-        <!--порт 8022        -->
-        const response = await fetch('http://localhost:8000/cards/?card_id='+card_id,
+         const response = await fetch('{{host}}/cards/?card_id='+card_id,
             {
                 method: 'put',
                 headers: {'Content-Type': 'application/json;charset=utf-8'},
@@ -143,8 +138,7 @@
     }
 
     const deleteCardRequest = async (card_id) => {
-        <!--порт 8022        -->
-        const response = await fetch('http://localhost:8000/cards/?card_id='+card_id,
+        const response = await fetch('{{host}}/cards/?card_id='+card_id,
             {
                 method: 'delete',
                 headers: {'Content-Type': 'application/json;charset=utf-8'}
@@ -154,8 +148,7 @@
     }
 
     const deleteColumnRequest = async (column_id) => {
-        <!--порт 8022        -->
-        const response = await fetch('http://localhost:8000/columns/?column_id='+column_id,
+        const response = await fetch('{{host}}/columns/?column_id='+column_id,
             {
                 method: 'delete',
                 headers: {'Content-Type': 'application/json;charset=utf-8'}
@@ -164,14 +157,14 @@
         return await response.json();
     }
 
-    async function createcolumn(desk_id) {
+    async function createColumn(desk_id) {
         const columnNew = prompt('Название колонки', 'Новая колонка');
         const newColumn = await createColumnRequest(desk_id, columnNew);
         console.log(newColumn) // todo проверять ошибки
         document.location.reload();
     }
 
-    async function deletecolumn(column_id) {
+    async function deleteColumn(column_id) {
         let check = confirm('Вы уверены?')
         if (check) {
             const delColumn = await deleteColumnRequest(column_id);
@@ -180,14 +173,14 @@
         }
     }
 
-    async function updcolumn(column_id, column_order_num) {
+    async function updateColumn(column_id, column_order_num) {
         const columnNewTitle = prompt('Название колонки', 'Новое имя');
         const updColumn = await renameColumnRequest(column_id, columnNewTitle, column_order_num);
         console.log(updColumn) // todo проверять ошибки
         document.location.reload();
     }
 
-    async function createcard(desk_id) {
+    async function createCard(desk_id) {
         let form = document.forms.form;
         let title = form.elements.title;
         let content = form.elements.content;
@@ -195,19 +188,19 @@
         let column_id = form.elements.column_id;
         const newCard = await createCardRequest(desk_id, title.value, content.value, end_date.value, column_id.value);
         console.log(newCard) // todo проверять ошибки
-        document.location.href='http://localhost:8000/desks/?desk_id='+{{desk_info[0].desk_id}}
+        document.location.href='{{host}}/desks/?desk_id=' + '{{desk_info.desk_id}}'
     }
 
-    async function deletecard(card_id) {
+    async function deleteCard(cardId) {
         let check = confirm('Вы уверены?')
         if (check) {
-            const delCard = await deleteCardRequest(card_id);
+            const delCard = await deleteCardRequest(cardId);
             console.log(delCard) // todo проверять ошибки
             document.location.reload();
         }
     }
 
-    async function updcard() {
+    async function updateCard() {
         let form2 = document.forms.form2;
         let title = form2.elements.newtitle;
         let content = form2.elements.newcontent;
@@ -215,7 +208,7 @@
         let column_id = form2.elements.newcolumnid;
         const updCard = await updateCardRequest(desk_idg, title.value, content.value, end_date.value, column_id.value, order_numb);
         console.log(updCard) // todo проверять ошибки
-        document.location.href='http://localhost:8000/desks/?desk_id='+{{desk_info[0].desk_id}}
+        document.location.href='{{host}}/desks/?desk_id=' + '{{desk_info.desk_id}}'
     }
 
 </script>

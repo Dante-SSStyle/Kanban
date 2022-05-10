@@ -4,19 +4,6 @@
     <link rel="stylesheet" href="{{ url_for('static', path='/desks.css') }}">
     <meta charset="UTF-8">
     <title>План Канбан</title>
-<!--    <style>-->
-<!--        .desk {-->
-<!--            background: cornflowerblue;-->
-<!--        }-->
-
-<!--        main {-->
-<!--            display: flex;-->
-<!--            flex-direction: column;-->
-<!--            justify-content: center;-->
-<!--            align-items: center;-->
-<!--        }-->
-<!--    </style>-->
-
 </head>
 <body>
 <h1 id="h1">План Канбан</h1>
@@ -25,12 +12,12 @@
     <div class="desks-list">
 
         {% for i in desks_list %}
-        <!--порт 8022        -->
-        <a class="desk" href="http://localhost:8000/desks?desk_id={{i.desk_id}}">
+
+        <a class="desk" href="{{host}}/desks?desk_id={{i.desk_id}}">
             {{i.desk_title}}
         </a>
-        <button onclick="deletedesk({{i.desk_id}})">Удалить доску</button>
-        <button onclick="renamedesk({{i.desk_id}})">Переименовать доску</button>
+        <button onclick="renameDesk('{{i.desk_id}}')">Удалить доску</button>
+        <button onclick="deleteDesk('{{i.desk_id}}')">Переименовать доску</button>
 
         {% endfor %}
 
@@ -45,8 +32,7 @@
 <script>
 
     const createDeskRequest = async (deskTitle) => {
-        <!--порт 8022        -->
-        const response = await fetch('http://localhost:8000/desks/',
+        const response = await fetch('{{host}}/desks/',
             {
                 method: 'post',
                 headers: {'Content-Type': 'application/json;charset=utf-8'},
@@ -57,9 +43,8 @@
 
     }
 
-    const deleteDeskRequest = async (desk_id) => {
-        <!--порт 8022        -->
-        const response = await fetch('http://localhost:8000/desks/?desk_id='+desk_id,
+    const deleteDeskRequest = async (deskId) => {
+        const response = await fetch('{{host}}/desks/?desk_id='+deskId,
             {
                 method: 'delete',
                 headers: {'Content-Type': 'application/json;charset=utf-8'}
@@ -68,9 +53,8 @@
         return await response.json();
     }
 
-    const renameDeskRequest = async (desk_id, deskTitle) => {
-        <!--порт 8022        -->
-        const response = await fetch('http://localhost:8000/desks/?desk_id='+desk_id,
+    const renameDeskRequest = async (deskId, deskTitle) => {
+        const response = await fetch('{{host}}/desks/?desk_id='+deskId,
             {
                 method: 'put',
                 headers: {'Content-Type': 'application/json;charset=utf-8'},
@@ -88,18 +72,18 @@
         document.location.reload();
     });
 
-    async function deletedesk(desk_id) {
+    async function deleteDesk(deskId) {
         let check = confirm('Вы уверены?')
         if (check) {
-            const delDesk = await deleteDeskRequest(desk_id);
+            const delDesk = await deleteDeskRequest(deskId);
             console.log(delDesk) // todo проверять ошибки
             document.location.reload();
         }
     }
 
-    async function renamedesk(desk_id) {
+    async function renameDesk(deskId) {
         const deskNewTitle = prompt('Название доски', 'Новое имя');
-        const updDesk = await renameDeskRequest(desk_id, deskNewTitle);
+        const updDesk = await renameDeskRequest(deskId, deskNewTitle);
         console.log(updDesk) // todo проверять ошибки
         document.location.reload();
     }

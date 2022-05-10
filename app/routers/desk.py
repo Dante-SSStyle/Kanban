@@ -1,12 +1,12 @@
 from typing import List
 from fastapi import APIRouter, Request
 from fastapi.templating import Jinja2Templates
-from app.classes import Desk
-from app.models import DeskInsert, DeskBase, DeskFull
+from classes import DeskOld as Desk
+from models import DeskInsert, DeskBase, DeskFull
 from fastapi.responses import PlainTextResponse, JSONResponse, RedirectResponse
 
 router = APIRouter()
-templates = Jinja2Templates(directory="app/templates")
+templates = Jinja2Templates(directory="templates")
 
 
 # todo response model должен быть html или не быть вообще
@@ -22,7 +22,8 @@ async def get_desk(request: Request, desk_id: int):
     dsk = Desk()
     desk_info = dsk.desk_read(desk_id)
     # return desk_info
-    return templates.TemplateResponse("desk.html", {"request": request, "desk_info": desk_info})
+    return templates.TemplateResponse("normal_desk.html", {"request": request, "desk_info": desk_info[0]})
+    # return templates.TemplateResponse("desk.html", {"request": request, "desk_info": desk_info[0]})
 
 
 @router.post('/', response_model=List[DeskBase], description='Создаём доску')

@@ -1,13 +1,19 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends, Query
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
-from app.db import database
-from app.routers import desk_router, card_router, column_router
+# from db_old import database
+from routers import desk_router, card_router, column_router
 from fastapi import APIRouter, Request, Query
-from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from fastapi.responses import PlainTextResponse, JSONResponse, RedirectResponse
+from config import HOST
+
+from sqlalchemy.orm import Session
+from db import database_channel
+from classes import Desk
+from models import DeskCreate, DeskExtract, DeskExtractAll, DeskDelete
+
 
 
 app = FastAPI(
@@ -17,7 +23,6 @@ app = FastAPI(
     redoc_url='/doc'
 )
 
-
 # Добавление поддержки политик CORS
 app.add_middleware(
     CORSMiddleware,
@@ -25,6 +30,8 @@ app.add_middleware(
     allow_methods=['GET', 'POST', 'PUT', 'DELETE'],
     allow_headers=["*"]
 )
+
+
 
 
 app.include_router(
@@ -45,38 +52,45 @@ app.include_router(
     tags=['column'],
     dependencies=[]
 )
-app.mount('/app/static', StaticFiles(directory='app/static'), name='static')
+app.mount('/static', StaticFiles(directory='static'), name='static')
 templates = Jinja2Templates(directory="templates")
 
-# Перехват дефолтных ошибок
-# @app.exception_handler(StarletteHTTPException)
-# async def http_exception_handler(request, exc):
-#     return JSONResponse({"detail": str(exc.detail)}, status_code=exc.status_code)
-#
-#
-# @app.exception_handler(RequestValidationError)
-# async def validation_exception_handler(request, exc):
-#     return JSONResponse({"detail": str("lox")}, status_code=400)
-#
 
+# Перехват ошибок
+@app.exception_handler(StarletteHTTPException)
+async def http_exception_handler(request, exc):
+    return templates.TemplateResponse("error.html", {"request": request, "detail": str(exc.detail), "status_code": exc.status_code})
 
-# @app.get("/test")
-# def greet():
-#     return RedirectResponse("http://127.0.0.1:8022/desks/all")
+@app.get("/tmp")
+def ttt():
+    return "ready!"
 
+@app.get("/dsk")
+def tt1():
+    return Desk.extract_all()
 
+@app.get("/dsk/{dsk_id}")
+def tt1(dsk_id: int):
+    return Desk.extract(DeskExtract(id=dsk_id))
 
-# @app.get("/")
-# def test():
-#     return "Salyut!"
-#     # return RedirectResponse("http://127.0.0.1:8000/desks/getall")
+@app.post("/dsk")
+def tt2(desk: DeskCreate):
+    return Desk.create(desk)
+
+@app.delete("/dsk")
+def tt3(desk: DeskDelete):
+    return Desk.delete(desk)
+
+@app.get("/")
+def test():
+    return RedirectResponse(f"{HOST}/desks/all")
 
 
 @app.on_event('startup')
 async def startup():
-    await database.connect()
+    await database_channel.connect()
 
 
 @app.on_event('shutdown')
 async def shutdown():
-    await database.disconnect()
+    await database_channel.disconnect()

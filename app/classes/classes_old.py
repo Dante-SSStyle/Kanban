@@ -1,8 +1,8 @@
 from typing import Optional
 from sqlalchemy import func
 from asyncpg.exceptions import ForeignKeyViolationError, UniqueViolationError
-from app.db import session, ColumnSQL, DeskSQL, CardSQL, database
-from app.exceptions import KanbanException
+from db import sosi as session, ColumnSQL, DeskSQL, CardSQL, debil as database
+from exceptions import KanbanException
 
 
 class MainInnerClass:
