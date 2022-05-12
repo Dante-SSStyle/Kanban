@@ -1,19 +1,31 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', path='styles/index.css') }}">
     <meta charset="UTF-8">
     <title>План Канбан</title>
-    <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <h1>План Канбан</h1>
-    <div class="auth-box">
-        <form method="get" action="http://localhost:8000/desks/all/">
-            <p>Авторизация</p>
-            <input type="text" placeholder="Логин"><br>
-            <input type="text" placeholder="Пароль"><br>
-            <button type="submit">Загрузить Доски</button>
-        </form>
-    </div>
+
+
+<div class="container">
+    <h1 id="h1">План Канбан</h1>
+    <button class="create-desk waves-effect waves-light btn green darken-3">Создать доску</button>
+
+    {% for i in desks_list %}
+
+    {% include 'components/desk_card.html' %}
+
+    {% endfor %}
+
+
+
+
+</div>
+
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script type="module" src="{{ url_for('static', path='scripts/script.js') }}"></script>
 </html>

@@ -18,9 +18,11 @@
 <a href="https://nuancesprog.ru/p/14818/">6</a>  
 
 
+#### Css
+<a href="https://materializecss.com/typography.html">стили</a> 
 
 ## Todo:
-1. Стили с кабаном  
-2. Прямые ссылки только: all_desks, desk, card   
-3. Авторизация
-4. Динамический url для jinja
+1. Деплой  
+2. Авторизация
+3. Ренумерация колонок/карт
+4. crsf token

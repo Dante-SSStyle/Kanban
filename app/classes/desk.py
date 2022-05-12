@@ -4,8 +4,6 @@ from db import DeskDB, session
 
 
 class Desk:
-    def __init__(self):
-        self.db = session
 
     @classmethod
     def create(cls, desk: DeskCreate):
@@ -18,12 +16,12 @@ class Desk:
     @classmethod
     def delete(cls, desk: DeskDelete):
         dsk = DeskDB(id=desk.id)
-        res = session.delete(dsk)
-        return res
+        session.query(DeskDB).filter(DeskDB.id == desk.id).delete()
+        return dsk
 
     @classmethod
     def extract_all(cls):
-        return session.query(DeskDB).all()
+        return session.query(DeskDB).order_by(DeskDB.id).all()
 
     @classmethod
     def extract(cls, desk: DeskExtract):
@@ -31,5 +29,6 @@ class Desk:
 
     @classmethod
     def update(cls, desk: DeskUpdate):
-        res = session.query(DeskDB).filter(DeskDB.id == desk.id).update(DeskDB.title == desk.title)
-        return res
+        dsk = DeskDB(id=desk.id, title=desk.title)
+        session.query(DeskDB).filter(DeskDB.id == desk.id).update({DeskDB.title: desk.title})
+        return dsk

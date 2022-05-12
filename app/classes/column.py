@@ -1,25 +1,33 @@
 from sqlalchemy.orm import Session
 from models import ColumnCreate, ColumnExtract, ColumnExtractAll, ColumnUpdate, ColumnDelete
-from db import ColumnDB
+from db import ColumnDB, session
 
 
 class Column:
-    def __init__(self, db: Session):
-        self.db = db
+    @classmethod
+    def extract_all(cls, column: ColumnExtractAll):
+        return session.query(ColumnDB).filter(ColumnDB.desk_id == column.desk_id).order_by(ColumnDB.order).all()
 
-    def extract_all(self, column: ColumnExtractAll):
-        return self.db.query(ColumnDB).filter(ColumnDB.desk_id == column.desk_id).all()
+    @classmethod
+    def extract(cls, column: ColumnExtract):
+        return session.query(ColumnDB).filter(ColumnDB.id == column.id).first()
 
-    def extract(self, column: ColumnExtract):
-        return self.db.query(ColumnDB).filter(ColumnDB.id == column.id).first()
+    @classmethod
+    def delete(cls, column: ColumnDelete):
+        clmn = ColumnDB(id=column.id)
+        session.query(ColumnDB).filter(ColumnDB.id == column.id).delete()
+        return clmn
 
-    def create(self, column: ColumnCreate):
-        dsk = ColumnDB(title=column.title, desk_id=column.desk_id)
-        self.db.add(dsk)
-        self.db.commit()
-        self.db.refresh(dsk)
-        return dsk
+    @classmethod
+    def create(cls, column: ColumnCreate):
+        clmn = ColumnDB(title=column.title, desk_id=column.desk_id)
+        session.add(clmn)
+        session.commit()
+        session.refresh(clmn)
+        return clmn
 
-    def delete(self, column: ColumnDelete):
-        dsk = ColumnDB(id=column.id)
-        self.db.delete(dsk)
+    @classmethod
+    def update(cls, column: ColumnUpdate):
+        clmn = ColumnDB(id=column.id, title=column.title)
+        session.query(ColumnDB).filter(ColumnDB.id == column.id).update({ColumnDB.title: column.title})
+        return clmn

@@ -13,7 +13,7 @@ class Column(Base):
     order = Cmn(Integer)
     desk_id = Cmn(Integer, ForeignKey("desks.id"), nullable=False)
     created_at = Cmn(Date, default=func.now())
-    updated_at = Cmn(Date, default=func.now())
+    updated_at = Cmn(Date, default=func.now(), onupdate=func.now())
 
     desk = relationship("Desk", back_populates="columns")
     cards = relationship("Card", back_populates="column")

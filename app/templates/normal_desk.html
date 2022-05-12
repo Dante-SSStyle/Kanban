@@ -1,17 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', path='styles/index.css') }}">
     <meta charset="UTF-8">
-    <title>Normal Desk</title>
+    <title>План Канбан</title>
 </head>
 <body>
-  <h1>Desk {{desk_info.title}}</h1>
-  <div>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem cumque dolores ea nemo quae quia similique. Aspernatur consequatur, debitis, dolor dolorum, fugiat molestias necessitatibus nostrum quod reiciendis rerum tempore voluptas.
-  </div>
 
-  <div>
-      <a href="{{}}">На главную</a>
-  </div>
+
+<div class="container">
+    <h1 id="h1">{{desk_info.title}}</h1>
+
+    <div>hi</div>
+    <a class="waves-effect waves-light btn green darken-3" href="{{host}}">
+        <b>Home</b> <i class="small material-icons">home</i>
+    </a>
+
+</div>
+
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<!--<script type="module" src="{{ url_for('static', path='scripts/script.js') }}"></script>-->
 </html>

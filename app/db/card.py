@@ -15,7 +15,7 @@ class Card(Base):
     column_id = Cmn(Integer, ForeignKey("columns.id"), nullable=False)
     desk_id = Cmn(Integer, ForeignKey("desks.id"), nullable=False)
     created_at = Cmn(Date, default=func.now())
-    updated_at = Cmn(Date, default=func.now())
+    updated_at = Cmn(Date, default=func.now(), onupdate=func.now())
 
     desk = relationship("Desk", back_populates="cards")
     column = relationship("Column", back_populates="cards")

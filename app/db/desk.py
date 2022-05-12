@@ -9,7 +9,7 @@ class Desk(Base):
 
     id = Cmn(Integer, primary_key=True, index=True)
     title = Cmn(String, index=True)
-    updated_at = Cmn(Date, default=func.now())
+    updated_at = Cmn(Date, default=func.now(), onupdate=func.now())
     created_at = Cmn(Date, default=func.now())
 
     columns = relationship("Column", back_populates="desk")
