@@ -1,4 +1,3 @@
-from sqlalchemy.orm import Session
 from models import ColumnCreate, ColumnExtract, ColumnExtractAll, ColumnUpdate, ColumnDelete
 from db import ColumnDB, session
 
@@ -20,7 +19,7 @@ class Column:
 
     @classmethod
     def create(cls, column: ColumnCreate):
-        clmn = ColumnDB(title=column.title, desk_id=column.desk_id)
+        clmn = ColumnDB(title=column.title, desk_id=column.desk_id, order=column.order)
         session.add(clmn)
         session.commit()
         session.refresh(clmn)

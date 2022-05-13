@@ -6,7 +6,7 @@ class CardBase(BaseModel):
     id: int
 
 
-class CardExtractAll(CardBase):
+class CardExtractAll(BaseModel):
     desk_id: int
     column_id: int = Optional
 
@@ -16,14 +16,16 @@ class CardExtract(CardBase):
 
 
 class CardCreate(BaseModel):
+    desk_id: int
+    column_id: int
     title: str
     text: str = Optional
+    order: int
 
 
 class CardUpdate(CardBase):
     column_id: int = Optional
     estimate: int = Optional
-    number: int = Optional
     order: int = Optional
     text: str = Optional
     title: str = Optional

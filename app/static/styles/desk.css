@@ -1,0 +1,10 @@
+body {
+    background-image: url(../images/wp.jpg);
+}
+
+.column {
+    text-align: center;
+}
+.task {
+    text-align: left;
+}

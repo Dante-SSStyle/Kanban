@@ -5,3 +5,7 @@ body {
 .desk-link:visited, .desk-link:active, .desk-link {
     color: white;
 }
+
+.desk-title {
+    font-weight: 500 !important;
+}

@@ -18,6 +18,7 @@ class ColumnExtract(ColumnBase):
 class ColumnCreate(BaseModel):
     desk_id: int
     title: str
+    order: int = Optional
 
 
 class ColumnUpdate(ColumnBase):

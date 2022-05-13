@@ -1,44 +1,30 @@
-from typing import List
-from fastapi import APIRouter
-from classes import CardOld as Card
-from models import CardInsert, CardUpdate, CardBase
+from fastapi import APIRouter, Query
+from classes import Card
+from models import CardCreate, CardExtract, CardExtractAll, CardUpdate, CardDelete
 
 router = APIRouter()
 
 
-@router.get('/all', response_model=List[CardBase], description='Получаем карты')
-async def get_all_cards():
-    card = Card()
-    res = await card.card_read_all()
-    return res
+@router.get('/', description='Получаем карточки')
+async def get_all_cards(desk_id: int = Query(...), column_id: int = Query(...)):
+    return Card.extract_all(CardExtractAll(desk_id=desk_id, column_id=column_id))
 
 
-@router.get('/', response_model=List[CardBase], description='Получаем конкретную карту')
+@router.get('/{card_id}', description='Получаем конкретную карточку')
 async def get_card(card_id: int):
-    card = Card()
-    res = await card.card_read(card_id)
-    return res
+    return Card.extract(CardExtract(id=card_id))
 
 
-@router.post('/', response_model=List[CardBase], description='Создаём карточку')
-async def create_card(insertion: CardInsert):
-    card = Card()
-    await card.card_create(insertion)
-    res = await card.show_created(insertion)
-    return res
+@router.post('/', description='Создаём карточку')
+async def create_card(card: CardCreate):
+    return Card.create(card)
 
 
-@router.put('/', response_model=List[CardBase], description='Изменяем карточку')
-async def update_card(card_id: int, insertion: CardUpdate):
-    card = Card()
-    await card.card_update(card_id, insertion)
-    res = await card.show_created(insertion, card_id)
-    return res
+@router.put('/', description='Изменяем карточку')
+async def update_card(card: CardUpdate):
+    return Card.update(card)
 
 
-@router.delete('/', response_model=List[CardBase], description='Удаляем карточку')
-async def delete_column(card_id: int):
-    card = Card()
-    res = await card.fetch_line(card_id)
-    await card.card_delete(card_id)
-    return res
+@router.delete('/', description='Удаляем карточку')
+async def delete_card(card: CardDelete):
+    return Card.delete(card)

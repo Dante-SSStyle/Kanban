@@ -7,7 +7,7 @@ class Card:
 
     @classmethod
     def extract_all(cls, card: CardExtractAll):
-        return session.query(CardDB).filter(CardDB.desk_id == card.desk_id).order_by(CardDB.order).all()
+        return session.query(CardDB).filter(CardDB.desk_id == card.desk_id, CardDB.column_id == card.column_id).order_by(CardDB.order).all()
 
     @classmethod
     def extract(cls, card: CardExtract):
@@ -21,7 +21,8 @@ class Card:
 
     @classmethod
     def create(cls, card: CardCreate):
-        crd = CardDB(title=card.title, text=card.text)
+        #todo добавлять order
+        crd = CardDB(title=card.title, text=card.text, desk_id=card.desk_id, column_id=card.column_id)
         session.add(crd)
         session.commit()
         session.refresh(crd)
@@ -29,6 +30,7 @@ class Card:
 
     @classmethod
     def update(cls, card: CardUpdate):
+        #todo обновлять только нужное поле
         crd = CardDB(id=card.id, title=card.title, text=card.text)
         session.query(CardDB).filter(CardDB.id == card.id).update({CardDB.title: card.title, CardDB.text: card.text})
         return crd

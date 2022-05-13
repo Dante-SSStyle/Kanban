@@ -2,7 +2,7 @@ const HOST = "http://localhost:8022"
 
 export class Desk {
 
-    url = HOST + "/desks"
+    url = HOST + "/desks/"
 
     async create(deskTitle) {
         const response = await fetch(this.url,
