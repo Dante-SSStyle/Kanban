@@ -1,0 +1,23 @@
+<div id="modal-card-create" class="modal">
+    <div class="modal-content">
+        <h4>Создать карточку</h4>
+        <div class="input-field">
+            <input id="title-card-create" type="text" minlength="3" class="validate">
+            <label for="title-card-create">Введите название</label>
+        </div>
+        <div class="input-field">
+            <select>
+
+                {% for i in columns %}
+                <option value="{{i.id}}"> {{i.title}}</option>
+                {% endfor %}
+
+            </select>
+            <label>Смена этапа</label>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="button-card-create modal-close btn-small">OK</a>
+        <a href="#" class="modal-close btn-small deep-orange darken-4">Cancel</a>
+    </div>
+</div>

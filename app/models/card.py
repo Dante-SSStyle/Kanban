@@ -8,7 +8,7 @@ class CardBase(BaseModel):
 
 class CardExtractAll(BaseModel):
     desk_id: int
-    column_id: int = Optional
+    column_id: Optional[int] = None
 
 
 class CardExtract(CardBase):
@@ -19,16 +19,15 @@ class CardCreate(BaseModel):
     desk_id: int
     column_id: int
     title: str
-    text: str = Optional
-    order: int
+    text: Optional[str] = "Empty"
 
 
 class CardUpdate(CardBase):
-    column_id: int = Optional
-    estimate: int = Optional
-    order: int = Optional
-    text: str = Optional
-    title: str = Optional
+    column_id: Optional[int] = None
+    estimate: Optional[int] = None
+    order: Optional[int] = None
+    text: Optional[str] = None
+    title: Optional[str] = None
 
 
 class CardDelete(CardBase):

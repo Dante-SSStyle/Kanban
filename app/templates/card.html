@@ -1,17 +1,60 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    <link rel="shortcut icon" href="{{ url_for('static', path='images/wild-boar.png') }}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', path='styles/index.css') }}">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>План Канбан</title>
 </head>
 <body>
-    <main>
-        <h1>Картчка</h1>
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            Debitis ducimus explicabo facilis hic placeat quasi quod recusandae!
-            Autem blanditiis eaque eligendi fugit illum libero natus quaerat recusandae, rem reprehenderit ut!
-        </p>
-    </main>
+
+
+<div class="container">
+
+    <div class="row">
+        <div class="col s12">
+
+            <div class="card-max card blue-grey darken-1">
+
+                <div class="card-content white-text">
+
+                    <span class="card-title">{{card.title}}</span>
+                    <p>{{card.text}}</p>
+
+
+                    <div class="input-field">
+                        <select>
+
+                            {% for i in columns %}
+                            {% if i.id == card.column_id %}
+                            <option value="{{i.id}}" selected> {{i.title}}</option>
+                            {% else %}
+                            <option value="{{i.id}}"> {{i.title}}</option>
+                            {% endif %}
+                            {% endfor %}
+
+                        </select>
+                        <label>Смена этапа</label>
+                    </div>
+
+
+                    <div>
+                        <a href="{{host}}/{{card.desk_id}}" class="btn teal darken-2">Desk</a>
+                        <a href="#"  class="card-delete btn deep-orange darken-4" data-id="{{card.id}}">Delete</a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script type="module" src="{{ url_for('static', path='scripts/card.js') }}"></script>
 </html>

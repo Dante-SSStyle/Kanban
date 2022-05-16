@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    <link rel="shortcut icon" href="{{ url_for('static', path='images/wild-boar.png') }}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', path='styles/desk.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='styles/index.css') }}">
     <meta charset="UTF-8">
     <title>План Канбан</title>
 </head>
@@ -14,21 +15,26 @@
 
     <h1>{{desk.title}}</h1>
 
-    <a class="waves-effect waves-light btn green darken-3" href="{{host}}">
-        <b>Home</b> <i class="small material-icons">home</i>
-    </a>
+
+    <a class="btn-small green darken-3" href="{{host}}"> <i class="small material-icons">home</i> </a>
+    <a class="btn-small modal-trigger green darken-3" href="#modal-column-create">Создать столбец</a>
+    <a class="btn-small modal-trigger green darken-3" href="#modal-card-create">Создать карточку</a>
+
+    {% include 'components/card_modals.html' %}
+    {% include 'components/column_modals.html' %}
 
     <div class="row">
         {% for i in columns %}
 
-            {% include 'components/column.html' %}
+        {% include 'components/column.html' %}
 
         {% endfor %}
     </div>
 
+    <div hidden class="current_desk" data-desk-id="{{desk.id}}"></div>
 </div>
 
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-<!--<script type="module" src="{{ url_for('static', path='scripts/script.js') }}"></script>-->
+<script type="module" src="{{ url_for('static', path='scripts/desk.js') }}"></script>
 </html>

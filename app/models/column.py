@@ -18,12 +18,11 @@ class ColumnExtract(ColumnBase):
 class ColumnCreate(BaseModel):
     desk_id: int
     title: str
-    order: int = Optional
 
 
 class ColumnUpdate(ColumnBase):
-    title: str = Optional
-    order: int = Optional
+    title: Optional[str] = None
+    order: Optional[int] = None
 
 
 class ColumnDelete(ColumnBase):

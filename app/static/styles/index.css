@@ -9,3 +9,29 @@ body {
 .desk-title {
     font-weight: 500 !important;
 }
+
+.category {
+    text-align: center;
+
+}
+
+.category-title {
+    font-size: x-large;
+}
+
+.card-mini {
+    text-align: left;
+}
+
+.card-max {
+    text-align: center;
+}
+
+
+.toast-success {
+    background-color: #4caf50;
+}
+
+.toast-fail {
+    background-color: #b71c1c;
+}

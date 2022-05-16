@@ -1,12 +1,14 @@
 <div class="col">
 
-    <div class="column">
-        <span class="">  {{i.title}} </span>
+    <div class="category">
+
+        <span class="category-title card-title">  <b> {{i.title}}</b> </span>
 
         {% for c in i.cards %}
-        <div class="task card deep-purple darken-4">
+
+        <div class="card-mini card deep-purple darken-4">
             <div class="card-content white-text">
-                <span class="card-title">{{c.title}}</span>
+                <a href="/card/{{c.id}}"> <span class="card-title">{{c.title}}</span></a>
                 <p> {{c.text}} </p>
             </div>
         </div>

@@ -5,6 +5,14 @@ body {
 .column {
     text-align: center;
 }
-.task {
+.crd {
     text-align: left;
+}
+
+.toast-success {
+    background-color: #4caf50;
+}
+
+.toast-fail {
+    background-color: #b71c1c;
 }

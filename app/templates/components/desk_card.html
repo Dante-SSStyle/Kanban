@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col s12 m6">
+    <div class="col">
         <div class="card blue-grey darken-1">
 
             <div class="card-content white-text">
@@ -11,12 +11,12 @@
             </div>
 
             <div class="card-action">
-                <button class="desk-rename btn waves-effect waves-light teal darken-2" data-id="{{i.id}}">Rename</button>
-                <button class="desk-delete btn waves-effect waves-light deep-orange darken-4" data-id="{{i.id}}">
+                <a class="desk-rename btn modal-trigger teal darken-2" data-desk-id="{{i.id}}" href="#modal-desk-rename">Rename</a>
+                <a class="desk-delete btn modal-trigger deep-orange darken-4" data-desk-id="{{i.id}}" href="#modal-desk-delete">
                     Delete
-                </button>
-
+                </a>
             </div>
+
         </div>
     </div>
 </div>
