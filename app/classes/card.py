@@ -42,10 +42,11 @@ class Card:
 
     @classmethod
     def update(cls, card: CardUpdate):
-        crd = CardDB(id=card.id, title=card.title, text=card.text)
+        crd = CardDB(id=card.id, title=card.title, text=card.text, column_id=card.column_id, estimate=card.estimate)
 
         update_body = dict(card)
         update_fields = {i: update_body[i] for i in update_body if update_body[i]}
 
         session.query(CardDB).filter(CardDB.id == card.id).update({**update_fields})
+        session.commit()
         return crd

@@ -56,7 +56,7 @@ document.addEventListener('click', async (e) => {
 
     if (deskId && e.target.classList.contains('button-desk-delete')) {
         const delDesk = await desk.remove(deskId);
-        resultToast({successMessage: 'Доска удаленна!', result: delDesk.ok});
+        resultToast({successMessage: 'Доска удалена!', result: delDesk.ok});
         refresh();
 
     }

@@ -1,7 +1,7 @@
 from typing import Optional
 from sqlalchemy import func
 from asyncpg.exceptions import ForeignKeyViolationError, UniqueViolationError
-from db import sosi as session, ColumnSQL, DeskSQL, CardSQL, debil as database
+# from db import sosi as session, ColumnSQL, DeskSQL, CardSQL, debil as database
 from exceptions import KanbanException
 
 

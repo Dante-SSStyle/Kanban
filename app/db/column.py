@@ -16,7 +16,7 @@ class Column(Base):
     updated_at = Cmn(Date, default=func.now(), onupdate=func.now())
 
     desk = relationship("Desk", back_populates="columns")
-    cards = relationship("Card", back_populates="column")
+    cards = relationship("Card", back_populates="column", cascade="all,delete")
 
     def __repr__(self):
         return f'Column [Id: {self.id}, title: {self.title}]'

@@ -22,7 +22,7 @@ class ColumnCreate(BaseModel):
 
 class ColumnUpdate(ColumnBase):
     title: Optional[str] = None
-    order: Optional[int] = None
+    # order: Optional[int] = None
 
 
 class ColumnDelete(ColumnBase):

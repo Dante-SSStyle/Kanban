@@ -1,3 +1,4 @@
+from datetime import date
 from typing import List, Optional
 from pydantic import BaseModel
 
@@ -24,8 +25,8 @@ class CardCreate(BaseModel):
 
 class CardUpdate(CardBase):
     column_id: Optional[int] = None
-    estimate: Optional[int] = None
-    order: Optional[int] = None
+    estimate: Optional[date] = None
+    # order: Optional[int] = None
     text: Optional[str] = None
     title: Optional[str] = None
 

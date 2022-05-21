@@ -77,13 +77,14 @@ export class Column {
         return response;
     }
 
-    async update(columnId, title, order) {
+    // async update(columnId, title, order) {
+    async update(columnId, title) {
 
         const response = await fetch(this.url,
             {
                 method: 'put',
                 headers: {'Content-Type': 'application/json;charset=utf-8'},
-                body: JSON.stringify({"id": columnId, "title": title, "order": order})
+                body: JSON.stringify({"id": columnId, "title": title})
             }
         );
         return response;
@@ -117,12 +118,12 @@ export class Card {
         return response;
     }
 
-    async update(cardId, title, text, order, deskId, columnId) {
+    async update(cardId, title, text, columnId, estimate) {
         const response = await fetch(this.url,
             {
                 method: 'put',
                 headers: {'Content-Type': 'application/json;charset=utf-8'},
-                body: JSON.stringify({"id": cardId, "title": title})
+                body: JSON.stringify({"id": cardId, "title": title, "text":text, "column_id": columnId, "estimate":estimate})
             }
         );
         return response;

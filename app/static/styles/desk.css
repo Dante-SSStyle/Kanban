@@ -16,3 +16,21 @@ body {
 .toast-fail {
     background-color: #b71c1c;
 }
+.row {
+    display: flex;
+    width: 100vw;
+    height: 80vh;
+    overflow-y: auto;
+    position: absolute;
+    left: 0px;
+
+}
+.category {
+    text-align: center;
+    width: 300px;
+
+}
+
+.category-title {
+    font-size: x-large;
+}

@@ -5,6 +5,10 @@ from sqlalchemy.orm import sessionmaker, Session
 from starlette.config import Config
 from starlette.datastructures import Secret
 from exceptions import KanbanException
+from sqlalchemy import Boolean, Column as Cmn, ForeignKey, Integer, String, Text, Date, func
+from sqlalchemy.orm import relationship
+
+
 
 
 try:
@@ -25,4 +29,5 @@ engine = create_engine(DATABASE_URL)
 session = Session(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
+
 Base.metadata.create_all(bind=engine)
