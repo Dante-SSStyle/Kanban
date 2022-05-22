@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from models import CardCreate, CardDelete, CardExtract, CardExtractAll, CardUpdate
+from models import CardCreate, CardDelete, CardExtract, CardExtractAll, CardUpdate, CardOrder
 from db import CardDB, ColumnDB, session
 
 
@@ -50,3 +50,22 @@ class Card:
         session.query(CardDB).filter(CardDB.id == card.id).update({**update_fields})
         session.commit()
         return crd
+
+    @classmethod
+    def upd_order(cls, card: CardOrder):
+        crd1 = CardDB(order=card.order)
+        crd2 = CardDB(order=card.new_order)
+
+        old = session.query(CardDB).filter(CardDB.order == card.order)
+        new = session.query(CardDB).filter(CardDB.order == card.new_order)
+        tempo = session.query(CardDB).filter(CardDB.order == 0)
+
+        old.update({'order': 0})
+        if new.all():
+            new.update({'order': card.order})
+            tempo.update({'order': card.new_order})
+            session.commit()
+        else:
+            tempo.update({'order': card.order})
+            session.commit()
+        return crd1, crd2

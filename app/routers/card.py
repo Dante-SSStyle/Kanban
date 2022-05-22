@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Query
 from classes import Card
-from models import CardCreate, CardExtract, CardExtractAll, CardUpdate, CardDelete
+from models import CardCreate, CardExtract, CardExtractAll, CardUpdate, CardDelete, CardOrder
 
 router = APIRouter()
 
@@ -23,6 +23,10 @@ async def create_card(card: CardCreate):
 @router.put('/', description='Изменяем карточку')
 async def update_card(card: CardUpdate):
     return Card.update(card)
+
+@router.put('/order', description='Меняем порядок карточек')
+async def upd_order_column(card: CardOrder):
+    return Card.upd_order(card)
 
 
 @router.delete('/', description='Удаляем карточку')

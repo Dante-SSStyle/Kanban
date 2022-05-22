@@ -35,6 +35,11 @@ class CardDelete(CardBase):
     pass
 
 
+class CardOrder(CardBase):
+    order: int
+    new_order: int
+
+
 class Card(CardBase):
     text: str
     title: str

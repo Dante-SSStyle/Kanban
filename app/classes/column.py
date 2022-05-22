@@ -1,4 +1,4 @@
-from models import ColumnCreate, ColumnExtract, ColumnExtractAll, ColumnUpdate, ColumnDelete
+from models import ColumnCreate, ColumnExtract, ColumnExtractAll, ColumnUpdate, ColumnDelete, ColumnOrder
 from db import ColumnDB, session
 from sqlalchemy import func
 
@@ -44,3 +44,21 @@ class Column:
         session.query(ColumnDB).filter(ColumnDB.id == column.id).update({**update_fields})
         session.commit()
         return clmn
+
+    @classmethod
+    def upd_order(cls, column: ColumnOrder):
+        clmn1 = ColumnDB(order=column.order)
+        clmn2 = ColumnDB(order=column.new_order)
+        old = session.query(ColumnDB).filter(ColumnDB.order == column.order)
+        new = session.query(ColumnDB).filter(ColumnDB.order == column.new_order)
+        tempo = session.query(ColumnDB).filter(ColumnDB.order == 0)
+
+        old.update({'order': 0})
+        if new.all():
+            new.update({'order': column.order})
+            tempo.update({'order': column.new_order})
+            session.commit()
+        else:
+            tempo.update({'order': column.order})
+            session.commit()
+        return clmn1, clmn2

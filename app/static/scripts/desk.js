@@ -68,6 +68,34 @@ document.addEventListener('click', async (e) => {
     }
 });
 
+// column increase order
+document.addEventListener('click', async (e) => {
+    const columnId = currentColumn.dataset.columnId;
+    const columnOrder = e.target.dataset.columnOrder;
+    const columnNextOrder = parseInt(columnOrder)+1;
+    if (columnId && columnOrder && e.target.classList.contains('button-col-incr-order')) {
+        const updCol1 = await column.updorder(columnId, columnOrder, columnNextOrder)
+        resultToast({successMessage: 'Перемещено!', result: updCol1.ok});
+        refresh();
+
+    }
+
+});
+
+// column decrease order
+document.addEventListener('click', async (e) => {
+    const columnId = currentColumn.dataset.columnId;
+    const columnOrder = e.target.dataset.columnOrder;
+    const columnNextOrder = parseInt(columnOrder)-1;
+    if (columnId && columnOrder && e.target.classList.contains('button-col-decr-order')) {
+        const updCol1 = await column.updorder(columnId, columnOrder, columnNextOrder)
+        resultToast({successMessage: 'Перемещено!', result: updCol1.ok});
+        refresh();
+
+    }
+
+});
+
 
 // create card
 const createCardButton = document.querySelector('.button-card-create');
@@ -115,6 +143,34 @@ document.addEventListener('click', async (e) => {
     }
 
 })
+
+// card increase order
+document.addEventListener('click', async (e) => {
+    const cardId = currentColumn.dataset.columnId;
+    const cardOrder = e.target.dataset.cardOrder;
+    const cardNextOrder = parseInt(cardOrder)+1;
+    if (cardId && cardOrder && e.target.classList.contains('button-card-incr-order')) {
+        const updCol1 = await card.updorder(cardId, cardOrder, cardNextOrder)
+        resultToast({successMessage: 'Перемещено!', result: updCol1.ok});
+        refresh();
+
+    }
+
+});
+
+// card decrease order
+document.addEventListener('click', async (e) => {
+    const cardId = currentColumn.dataset.columnId;
+    const cardOrder = e.target.dataset.cardOrder;
+    const cardNextOrder = parseInt(cardOrder)-1;
+    if (cardId && cardOrder && e.target.classList.contains('button-card-decr-order')) {
+        const updCol1 = await card.updorder(cardId, cardOrder, cardNextOrder)
+        resultToast({successMessage: 'Перемещено!', result: updCol1.ok});
+        refresh();
+
+    }
+
+});
 
 // delete card
 document.addEventListener('click', async (e) => {

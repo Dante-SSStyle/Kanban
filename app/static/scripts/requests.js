@@ -77,6 +77,17 @@ export class Column {
         return response;
     }
 
+    async updorder(columnId, curOrder, nextOrder) {
+        const response = await fetch(this.url+'order',
+            {
+                method: 'put',
+                headers: {'Content-Type': 'application/json;charset=utf-8'},
+                body: JSON.stringify({"id": columnId, "order": curOrder, "new_order": nextOrder})
+            }
+        );
+        return response;
+    }
+
     // async update(columnId, title, order) {
     async update(columnId, title) {
 
@@ -128,5 +139,18 @@ export class Card {
         );
         return response;
     }
+
+    async updorder(cardId, curOrder, nextOrder) {
+        const response = await fetch(this.url+'order',
+            {
+                method: 'put',
+                headers: {'Content-Type': 'application/json;charset=utf-8'},
+                body: JSON.stringify({"id": cardId, "order": curOrder, "new_order": nextOrder})
+            }
+        );
+        return response;
+    }
 }
+
+
 

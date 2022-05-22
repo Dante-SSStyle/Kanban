@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Query
 from classes import Column
-from models import ColumnCreate, ColumnExtract, ColumnExtractAll, ColumnUpdate, ColumnDelete
+from models import ColumnCreate, ColumnExtract, ColumnExtractAll, ColumnUpdate, ColumnDelete, ColumnOrder
 
 router = APIRouter()
 
@@ -23,6 +23,10 @@ async def create_column(column: ColumnCreate):
 @router.put('/', description='Изменяем столбец')
 async def update_column(column: ColumnUpdate):
     return Column.update(column)
+
+@router.put('/order', description='Меняем порядок столбцов')
+async def upd_order_column(column: ColumnOrder):
+    return Column.upd_order(column)
 
 
 @router.delete('/', description='Удаляем столбец')

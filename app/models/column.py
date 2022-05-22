@@ -28,6 +28,9 @@ class ColumnUpdate(ColumnBase):
 class ColumnDelete(ColumnBase):
     pass
 
+class ColumnOrder(ColumnBase):
+    order: int
+    new_order: int
 
 class Column(ColumnBase):
     id: int

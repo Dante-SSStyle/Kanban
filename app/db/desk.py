@@ -13,7 +13,7 @@ class Desk(Base):
     created_at = Cmn(Date, default=func.now())
 
     columns = relationship("Column", back_populates="desk", order_by="Column.order", cascade="all,delete")
-    cards = relationship("Card", back_populates="desk", order_by="Column.order", cascade="all,delete")
+    cards = relationship("Card", back_populates="desk", order_by="Card.order", cascade="all,delete")
 
     def __repr__(self):
         return f'Desk [Id: {self.id}, title: {self.title}]'

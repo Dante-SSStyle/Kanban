@@ -26,7 +26,7 @@ except Exception:
 database_channel = databases.Database(DATABASE_URL)
 engine = create_engine(DATABASE_URL)
 
-session = Session(autocommit=False, autoflush=False, bind=engine)
+session = Session(autocommit=False, autoflush=True, bind=engine)
 
 Base = declarative_base()
 
