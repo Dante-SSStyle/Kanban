@@ -9,6 +9,7 @@ class Desk:
         dsk = DeskDB(title=desk.title)
         session.add(dsk)
         session.commit()
+        print(dsk)
         return dsk
 
     @classmethod

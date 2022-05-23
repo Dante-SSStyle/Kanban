@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from classes import Desk
-from models import DeskCreate, DeskExtract, DeskUpdate, DeskDelete
+from classes import Desk, Column
+from models import DeskCreate, DeskExtract, DeskUpdate, DeskDelete, ColumnCreate
 
 router = APIRouter()
 
@@ -19,7 +19,13 @@ def get_desk(desk_id: int):
 
 @router.post('/', description='Создаём доску')
 def create_desk(desk: DeskCreate):
-    return Desk.create(desk)
+    new_desk_info = Desk.create(desk)
+    ColumnCreate.desk_id = new_desk_info.id
+    clmns = ['Backlog', 'ToDo', 'Doing', 'Done!']
+    for i in clmns:
+        ColumnCreate.title = i
+        Column.create(ColumnCreate)
+    return new_desk_info
 
 
 @router.put('/', description='Изменяем доску')

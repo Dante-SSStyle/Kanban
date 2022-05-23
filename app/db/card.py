@@ -1,11 +1,11 @@
 from sqlalchemy import Boolean, Column as Cmn, ForeignKey, Integer, String, Text, Date, func
 from sqlalchemy.orm import relationship
-
 from .db import Base
 
 
 class Card(Base):
     __tablename__ = "cards"
+    __table_args__ = {'extend_existing': True}
 
     id = Cmn(Integer, primary_key=True, index=True)
     title = Cmn(String, index=True)

@@ -13,13 +13,13 @@
 
 <div class="container">
 
-    <h1>{{desk.title}}</h1>
+    <h1 class="blue-grey-text text-lighten-4">{{desk.title}}</h1>
 
-
-    <a class="btn-small green darken-3" href="{{host}}"> <i class="small material-icons">home</i> </a>
-    <a class="btn-small modal-trigger green darken-3 col-id-btn" data-desk-id="{{desk.id}}" href="#modal-column-create">Создать столбец</a>
-    <a class="btn-small modal-trigger green darken-3" href="#modal-card-create">Создать карточку</a>
-
+    <div class="desk-buttons">
+    <a class="waves-effect waves-light btn-small green darken-3" href="{{host}}"> <i class="small material-icons">home</i> </a>
+    <a class="waves-effect waves-light btn-small modal-trigger green darken-3 col-id-btn" data-desk-id="{{desk.id}}" href="#modal-column-create">Создать столбец</a>
+    <a class="waves-effect waves-light btn-small modal-trigger green darken-3" href="#modal-card-create">Создать карточку</a>
+    </div>
     {% include 'components/card_modals.html' %}
     {% include 'components/column_modals.html' %}
 

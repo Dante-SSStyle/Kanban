@@ -10,7 +10,7 @@ const selects = document.querySelectorAll('select');
 const selectInstances = M.FormSelect.init(selects, {});
 
 const drops = document.querySelectorAll('.dropdown-trigger');
-const dropInstances = M.Dropdown.init(drops);
+const dropInstances = M.Dropdown.init(drops, {container: '.col'});
 
 const currentDesk = document.querySelector('.col-id-btn');
 const currentColumn = document.querySelector('.current_column');

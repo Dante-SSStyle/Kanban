@@ -1,12 +1,12 @@
 from sqlalchemy import Boolean, ForeignKey, Integer, String, Text, Date, func
 from sqlalchemy import Column as Cmn
 from sqlalchemy.orm import relationship
-
 from .db import Base
 
 
 class Column(Base):
     __tablename__ = "columns"
+    __table_args__ = {'extend_existing': True}
 
     id = Cmn(Integer, primary_key=True, index=True)
     title = Cmn(String, index=True)
@@ -16,7 +16,7 @@ class Column(Base):
     updated_at = Cmn(Date, default=func.now(), onupdate=func.now())
 
     desk = relationship("Desk", back_populates="columns")
-    cards = relationship("Card", back_populates="column", cascade="all,delete")
+    cards = relationship("Card", back_populates="column", order_by="Card.order", cascade="all, delete")
 
     def __repr__(self):
         return f'Column [Id: {self.id}, title: {self.title}]'

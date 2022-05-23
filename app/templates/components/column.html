@@ -1,34 +1,38 @@
 <div class="col">
 
     <div class="category">
-        <span id="col-title" class="category-title card-title">  <b> {{i.title}}!{{i.order}}</b> </span><br>
-        <div>
+
+        <div class="col-head">
+            <span id="col-title" class="category-title card-title"><b class="ititle deep-purple-text text-darken-4"> {{i.title}}</b></span><br>
             <!-- left arrow     -->
             {% if i.order > 1 %}
-                <a href="#" style="position: relative; float: left"><i class="small material-icons button-col-decr-order" data-column-order="{{i.order}}" data-column-id="{{i.id}}">chevron_left</i></a>
+                <a href="#">
+                    <i class="left-arr small material-icons button-col-decr-order" data-column-order="{{i.order}}" data-column-id="{{i.id}}">chevron_left</i>
+                </a>
             {% endif %}
             <!--  drop middle arrow -->
-            <a class='dropdown-trigger' href='#' data-target='dropdown{{i.id}}' style="position: relative;">
+            <a class='col-drop dropdown-trigger' href='#' data-target='dropdown{{i.id}}'>
                 <i class="small material-icons">arrow_drop_down</i>
             </a>
             <ul id='dropdown{{i.id}}' class='dropdown-content'>
-                <li><a class="modal-trigger" data-column-id="{{i.id}}" href="#modal-column-rename">
-                    <i class="small material-icons">border_color</i>Изменить
+                <li><a class="modal-trigger green-text text-darken-3" data-column-id="{{i.id}}" href="#modal-column-rename">
+                    <i class="small material-icons ">border_color</i>Изменить
                 </a>
                 </li>
                 <li class="divider" tabindex="-1"></li>
                 <li>
-                    <a class="modal-trigger" data-column-id="{{i.id}}" href="#modal-column-delete">
+                    <a class="modal-trigger deep-orange-text text-darken-4" data-column-id="{{i.id}}" href="#modal-column-delete">
                         <i class="small material-icons">delete</i>Удалить
                     </a>
                 </li>
             </ul>
             <!--   right arrow         -->
-                <a href="#" style="position: relative; float: right" >
-                    <i class="small material-icons button-col-incr-order" data-column-order="{{i.order}}" data-column-id="{{i.id}}">chevron_right</i>
+                <a href="#">
+                    <i class="right-arr small material-icons button-col-incr-order" data-column-order="{{i.order}}" data-column-id="{{i.id}}">chevron_right</i>
                 </a>
 
         </div>
+        <div class="col-body">
         {% for c in i.cards %}
 
         <!--  modal for card update      -->
@@ -70,28 +74,28 @@
         <!--   end modal for card update     -->
 
         <div class="card-mini card deep-purple darken-4">
-            <div style="display: flex; flex-flow: row;" class="card-content white-text">
-                <div style="margin: auto; word-wrap:break-word; width: 240px;">
-                <a href="/card/{{c.id}}"> <span class="card-title">{{c.title}}</span></a>
+            <div class="card-content white-text">
+                <div class="card-text-content">
+                <a href="/card/{{c.id}}"> <span class="card-title teal-text text-lighten-1">{{c.title}}</span></a>
                 <p> {{c.text}} </p>
                 </div>
-                <div style="display: flex; flex-flow: column; margin-left: auto; width: 10px">
+                <div class="card-side-panel">
                     <!-- top arrow     -->
                     {% if c.order > 1 %}
                         <a href="#"><i class="small material-icons button-card-decr-order" data-card-order="{{c.order}}" data-card-id="{{c.id}}">keyboard_arrow_up</i></a>
                     {% endif %}
                     <!--  drop-->
-                    <a style="margin-top: auto; margin-bottom: auto" class='dropdown-trigger' href='#' data-target='menu_dropdown{{c.id}}'>
+                    <a class='card-drop dropdown-trigger' href='#' data-target='menu_dropdown{{c.id}}'>
                         <i class="small material-icons">menu</i>
                     </a>
                     <ul id='menu_dropdown{{c.id}}' class='dropdown-content'>
-                        <li><a class="modal-trigger" data-column-id="{{c.id}}" href="#modal-card-upd{{c.id}}">
+                        <li><a class="modal-trigger green-text text-darken-3" data-column-id="{{c.id}}" href="#modal-card-upd{{c.id}}">
                             <i class="small material-icons">border_color</i>Изменить
                         </a>
                         </li>
                         <li class="divider" tabindex="-1"></li>
                         <li>
-                            <a class="modal-trigger" data-column-id="{{c.id}}" href="#modal-card-delete">
+                            <a class="modal-trigger deep-orange-text text-darken-4" data-column-id="{{c.id}}" href="#modal-card-delete">
                                 <i class="small material-icons">delete</i>Удалить
                             </a>
                         </li>
@@ -103,6 +107,7 @@
         </div>
 
         {% endfor %}
+        </div>
     </div>
 
 </div>

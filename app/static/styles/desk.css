@@ -16,21 +16,84 @@ body {
 .toast-fail {
     background-color: #b71c1c;
 }
+
 .row {
     display: flex;
     width: 100vw;
     height: 80vh;
-    overflow-y: auto;
+    /*overflow-y: auto;*/
     position: absolute;
     left: 0px;
-
 }
+
+.col-body {
+    max-height: 75vh;
+    overflow-y: auto;
+}
+
 .category {
     text-align: center;
     width: 300px;
-
+    background-color: rgba(100, 149, 237, 0.5);
+    border-radius: 5%;
 }
 
 .category-title {
     font-size: x-large;
+}
+
+.left-arr {
+    position: relative;
+    float: left;
+}
+
+.right-arr {
+    position: relative;
+    float: right;
+}
+
+.col-drop {
+    position: relative;
+}
+
+.card-content {
+    display: flex;
+    flex-flow: row;
+}
+
+.card-text-content {
+    margin: auto;
+    word-wrap:break-word;
+    width: 240px;
+    max-height: 250px;
+    overflow-x: auto;
+}
+
+.card-side-panel {
+    display: flex;
+    flex-flow: column;
+    margin-left: auto;
+    width: 10px;
+}
+
+.card-drop {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.card {
+    max-height: 300px;
+}
+
+.ititle {
+    word-wrap:break-word;
+}
+
+.desk-buttons {
+    margin-top: -10px;
+    margin-bottom: 10px
+}
+
+#text-upd {
+    width: 800px;
 }

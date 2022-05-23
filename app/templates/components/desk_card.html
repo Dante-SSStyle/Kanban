@@ -1,17 +1,17 @@
 <div class="row">
     <div class="col">
-        <div class="card blue-grey darken-1">
+        <div class="card">
 
-            <div class="card-content white-text" style="width: 1200px">
+            <div class="card-content">
                 <a href="{{i.id}}" class="desk-link">
-                    <span class="desk-title card-title">{{i.title}}</span>
-                    <p>Создано: {{i.created_at}}</p>
+                    <span class="desk-title card-title blue-grey-text text-lighten-3">{{i.title}}</span>
+                    <p class="">Создано: {{i.created_at}}</p>
                 </a>
             </div>
 
             <div class="card-action">
-                <a class="desk-rename btn modal-trigger teal darken-2" data-desk-id="{{i.id}}" href="#modal-desk-rename">Переименовать</a>
-                <a class="desk-delete btn modal-trigger deep-orange darken-4" data-desk-id="{{i.id}}" href="#modal-desk-delete">
+                <a class="desk-rename btn-flat modal-trigger teal darken-2 white-text" data-desk-id="{{i.id}}" href="#modal-desk-rename">Переименовать</a>
+                <a class="desk-delete btn-flat modal-trigger deep-orange darken-4 white-text" data-desk-id="{{i.id}}" href="#modal-desk-delete">
                     Удалить
                 </a>
             </div>

@@ -26,6 +26,9 @@ body {
 .card-max {
     text-align: center;
 }
+.card-content {
+    width: 1200px
+}
 
 
 .toast-success {
@@ -34,4 +37,12 @@ body {
 
 .toast-fail {
     background-color: #b71c1c;
+}
+
+.card {
+    background: rgba(84, 110, 122, 0.25);
+}
+
+p {
+    color: #b0bec5;
 }
