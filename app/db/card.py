@@ -12,13 +12,13 @@ class Card(Base):
     text = Cmn(Text)
     order = Cmn(Integer)
     estimate = Cmn(Date)
-    column_id = Cmn(Integer, ForeignKey("columns.id"), nullable=False)
-    desk_id = Cmn(Integer, ForeignKey("desks.id"), nullable=False)
+    column_id = Cmn(Integer, ForeignKey("columns.id", ondelete='CASCADE'), nullable=False)
+    desk_id = Cmn(Integer, ForeignKey("desks.id", ondelete='CASCADE'), nullable=False)
     created_at = Cmn(Date, default=func.now())
     updated_at = Cmn(Date, default=func.now(), onupdate=func.now())
 
-    desk = relationship("Desk", back_populates="cards")
-    column = relationship("Column", back_populates="cards")
+    desk = relationship("Desk", back_populates="cards", cascade="all, delete")
+    column = relationship("Column", back_populates="cards", cascade="all, delete")
 
     def __repr__(self):
         return f'Card [Id: {self.id}, title: {self.title}]'

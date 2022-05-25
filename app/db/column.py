@@ -11,11 +11,11 @@ class Column(Base):
     id = Cmn(Integer, primary_key=True, index=True)
     title = Cmn(String, index=True)
     order = Cmn(Integer)
-    desk_id = Cmn(Integer, ForeignKey("desks.id"), nullable=False)
+    desk_id = Cmn(Integer, ForeignKey("desks.id", ondelete='CASCADE'), nullable=False)
     created_at = Cmn(Date, default=func.now())
     updated_at = Cmn(Date, default=func.now(), onupdate=func.now())
 
-    desk = relationship("Desk", back_populates="columns")
+    desk = relationship("Desk", back_populates="columns", cascade="all, delete")
     cards = relationship("Card", back_populates="column", order_by="Card.order", cascade="all, delete")
 
     def __repr__(self):

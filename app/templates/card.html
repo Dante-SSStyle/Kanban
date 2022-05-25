@@ -4,45 +4,76 @@
     <link rel="shortcut icon" href="{{ url_for('static', path='images/wild-boar.png') }}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', path='styles/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='styles/card.css') }}">
     <meta charset="UTF-8">
     <title>План Канбан</title>
 </head>
 <body>
-
+<!--  modal for card update      -->
+<div id="modal-card-update" class="modal">
+    <div class="modal-content">
+        <h4>{{card.title}}</h4>
+        <div class="input-field">
+            <div class="input-field">
+                <input id="title-rename" type="text" value="{{card.title}}">
+                <label for="title-rename">Введите новое название</label>
+            </div>
+            <div class="input-field">
+                <textarea id="text-upd" wrap="soft" >{{card.text}}</textarea>
+                <label for="text-upd">Введите текст</label>
+            </div>
+            <div class="input-field">
+                <input id="estimate" type="date" value="{{card.estimate}}">
+                <label for="estimate">Дедлайн</label>
+            </div>
+            <div class="input-field">
+                <select id="col-upd">
+                    {% for i in columns %}
+                    {% if i.id == card.column_id %}
+                    <option value="{{i.id}}" selected> {{i.title}}</option>
+                    {% else %}
+                    <option value="{{i.id}}"> {{i.title}}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+                <label for="col-upd">Смена этапа</label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#" data-card-id="{{card.id}}" class="button-card-update btn-flat white-text modal-close teal lighten-1">OK</a>
+        <a href="#" class="btn-flat white-text modal-close deep-orange darken-4">Отмена</a>
+    </div>
+</div>
+<!--   end modal for card update     -->
 
 <div class="container">
 
     <div class="row">
         <div class="col s12">
 
-            <div class="card-max card blue-grey darken-1">
+            <div class="card-max">
 
-                <div class="card-content white-text">
+                <div class="card-content">
 
-                    <span class="card-title">{{card.title}}</span>
-                    <p>{{card.text}}</p>
+                    <h2 class="card-title blue-grey-text text-lighten-3">{{card.title}}</h2>
+                    <p class="card-text white-text">{{card.text}}</p>
 
 
-                    <div class="input-field">
-                        <select>
-
-                            {% for i in columns %}
-                            {% if i.id == card.column_id %}
-                            <option value="{{i.id}}" selected> {{i.title}}</option>
-                            {% else %}
-                            <option value="{{i.id}}"> {{i.title}}</option>
-                            {% endif %}
-                            {% endfor %}
-
-                        </select>
-                        <label>Смена этапа</label>
+                    <div>
+                        <hr>
+                        <p class="created_date">Создано:{{card.created_at}}</p>
+                        <p class="updated_date">Обновлено:{{card.updated_at}}</p>
+                        {%if card.estimate%}
+                        <p class="red-text">ДЕДЛАЙН:{{card.estimate}}</p>
+                        {%endif%}
                     </div>
 
 
                     <div>
-                        <a href="{{host}}/{{card.desk_id}}" class="btn teal darken-2">Desk</a>
-                        <a href="#"  class="card-delete btn deep-orange darken-4" data-id="{{card.id}}">Delete</a>
+                        <a href="{{host}}/{{card.desk_id}}" class="btn teal darken-2">Назад</a>
+                        <a class="modal-trigger btn" data-card-id="{{card.id}}" href="#modal-card-update">Изменить</a>
+                        <a href="#"  class="card-delete btn deep-orange darken-4" data-id="{{card.id}}" data-d-id="{{card.desk.id}}">Удалить</a>
                     </div>
 
                 </div>

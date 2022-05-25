@@ -14,18 +14,6 @@ body {
     text-align: center;
 
 }
-
-.category-title {
-    font-size: x-large;
-}
-
-.card-mini {
-    text-align: left;
-}
-
-.card-max {
-    text-align: center;
-}
 .card-content {
     width: 1200px
 }

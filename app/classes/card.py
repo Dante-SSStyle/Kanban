@@ -22,6 +22,7 @@ class Card:
     def delete(cls, card: CardDelete):
         crd = CardDB(id=card.id)
         session.query(CardDB).filter(CardDB.id == card.id).delete()
+        session.commit()
         return crd
 
     @classmethod

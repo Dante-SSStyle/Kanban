@@ -15,7 +15,8 @@ class Column:
     @classmethod
     def delete(cls, column: ColumnDelete):
         clmn = ColumnDB(id=column.id)
-        session.query(ColumnDB).filter(ColumnDB.id == column.id).delete()
+        fetch_column = session.query(ColumnDB).filter(ColumnDB.id == column.id).delete()
+        # session.delete(fetch_column)
         session.commit()
         return clmn
 
