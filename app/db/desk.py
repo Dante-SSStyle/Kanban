@@ -8,7 +8,7 @@ class Desk(Base):
     __table_args__ = {'extend_existing': True}
 
     id = Cmn(Integer, primary_key=True, index=True)
-    title = Cmn(String, index=True)
+    title = Cmn(String, index=True, )
     updated_at = Cmn(Date, default=func.now(), onupdate=func.now())
     created_at = Cmn(Date, default=func.now())
 

@@ -21,18 +21,19 @@
     <a class="waves-effect waves-light btn-small modal-trigger green darken-3" href="#modal-card-create">Создать карточку</a>
     </div>
     {% include 'components/card_modals.html' %}
-    {% include 'components/column_modals.html' %}
+
 
     <div class="row">
         {% for i in columns %}
 
+        {% include 'components/column_modals.html' %}
         {% include 'components/column.html' %}
 
         {% endfor %}
     </div>
 
     <div hidden class="current_column" data-column-id="0"></div>
-<!--    <div hidden class="current_card" data-card-id="0"></div>-->
+
 </div>
 
 </body>

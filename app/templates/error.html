@@ -2,12 +2,13 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <link rel="shortcut icon" href="{{ url_for('static', path='images/wild-boar.png') }}">
     <title>Ошибка передачи данных</title>
 </head>
 <body>
   <main>
     <h1>Ошибка {{status_code}}</h1>
-    <p> При запросе данных произошла ошибка!</p>
+    <p> {{detail}}</p>
   </main>
 </body>
 </html>

@@ -23,7 +23,7 @@ p {
     background: rgba(49, 27, 146, 0.5)
 }
 .card-text {
-    height: 65vh;
+    height: 60vh;
     font-size: 20px;
     text-align: justify;
     white-space: pre-wrap;
@@ -34,4 +34,15 @@ p {
 }
 .updated_date {
     float: right;
+}
+.change-stage {
+    width: 1200px;
+    background: rgba(100, 149, 237, 0.5);
+}
+.toast-success {
+    background-color: #4caf50;
+}
+
+.toast-fail {
+    background-color: #b71c1c;
 }

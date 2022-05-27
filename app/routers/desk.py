@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 from classes import Desk, Column
+from exceptions import KanbanException
 from models import DeskCreate, DeskExtract, DeskUpdate, DeskDelete, ColumnCreate
 
 router = APIRouter()
@@ -20,11 +21,13 @@ def get_desk(desk_id: int):
 @router.post('/', description='Создаём доску')
 def create_desk(desk: DeskCreate):
     new_desk_info = Desk.create(desk)
-    ColumnCreate.desk_id = new_desk_info.id
-    clmns = ['Backlog', 'ToDo', 'Doing', 'Done!']
+    col_create = ColumnCreate
+    print(col_create)
+    col_create.desk_id = new_desk_info.id
+    clmns = ['Backlog', 'Сделать', 'В работе', 'Готово!']
     for i in clmns:
-        ColumnCreate.title = i
-        Column.create(ColumnCreate)
+        col_create.title = i
+        Column.create(col_create)
     return new_desk_info
 
 

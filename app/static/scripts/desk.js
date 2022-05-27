@@ -28,11 +28,14 @@ document.addEventListener('click', (e) => {
 const createColumnButton = document.querySelector('.button-column-create');
 createColumnButton.addEventListener('click', async (e) => {
     const deskId = currentDesk.dataset.deskId;
-    // const deskId = e.target.dataset.deskId;
     const columnTitleInput = document.querySelector('#modal-column-create input');
     const title = columnTitleInput.value;
 
-    if (deskId && title) {
+    if (title.length > 50 || title.length < 1) {
+        resultToast({failMessage: 'Имя должно содержать от 1 до 50 символов', result: false});
+    }
+
+    else if (deskId && title) {
         const newColumn = await column.create(title, deskId);
         resultToast({successMessage: 'Категория созданна!', result: newColumn.ok});
         refresh();
@@ -48,7 +51,11 @@ document.addEventListener('click', async (e) => {
         const colTitleInput = modal.querySelector('input')
         const colTitle = colTitleInput.value;
 
-        if (colTitle) {
+        if (colTitle.length > 50 || colTitle.length < 1) {
+        resultToast({failMessage: 'Имя должно содержать от 1 до 50 символов', result: false});
+        }
+
+        else if (colTitle) {
             const updCol = await column.update(columnId, colTitle);
             resultToast({successMessage: 'Столбец переименован!', result: updCol.ok});
             refresh();
@@ -106,7 +113,11 @@ createCardButton.addEventListener('click', async (e) => {
     const title = titleInput.value;
     const categoryId = categorySelect.value;
 
-    if (deskId && title) {
+    if (title.length > 50 || title.length < 1) {
+        resultToast({failMessage: 'Имя должно содержать от 1 до 50 символов', result: false});
+    }
+
+    else if (deskId && title) {
         const newCard = await card.create(title, deskId, categoryId);
         resultToast({successMessage: 'Карточка созданна!', result: newCard.ok});
         refresh();
@@ -128,13 +139,20 @@ document.addEventListener('click', async (e) => {
         const cardEstimate = cardEstimateInput.value;
         const cardCategory = cardCategoryUpdate.value;
 
-        console.log(cardId, cardCategory, cardEstimate, cardText, cardTitle)
-        if (cardId, cardTitle, cardText, cardCategory, cardEstimate) {
+        if (cardTitle.length > 50 || cardTitle.length < 1) {
+        resultToast({failMessage: 'Имя должно содержать от 1 до 50 символов', result: false});
+        }
+
+        else if (cardText.length > 1000) {
+        resultToast({failMessage: 'Не более 1000 символов', result: false});
+        }
+
+        else if (cardId, cardTitle, cardText, cardCategory, cardEstimate) {
             const updCard = await card.update(cardId, cardTitle, cardText, cardCategory, cardEstimate);
             resultToast({successMessage: 'Карточка изменена!', result: updCard.ok});
             refresh();
         }
-        if (cardId, cardTitle, cardText, cardCategory) {
+        else if (cardId, cardTitle, cardText, cardCategory) {
             const updCard = await card.update(cardId, cardTitle, cardText, cardCategory, null);
             resultToast({successMessage: 'Карточка изменена!', result: updCard.ok});
             refresh();

@@ -12,11 +12,12 @@
     </div>
 </div>
 
-<div id="modal-desk-rename" class="modal">
+{% for i in desks_list %}
+<div id="modal-desk-rename{{i.id}}" class="modal">
     <div class="modal-content">
         <h4>Новое имя</h4>
         <div class="input-field">
-            <input id="title-rename" type="text">
+            <input id="title-rename" type="text" value="{{i.title}}">
             <label for="title-rename">Введите название</label>
         </div>
     </div>
@@ -25,6 +26,7 @@
         <a href="#" class="modal-close btn-flat white-text deep-orange darken-4">Отмена</a>
     </div>
 </div>
+{% endfor %}
 
 <div id="modal-desk-delete" class="modal">
     <div class="modal-content">

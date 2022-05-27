@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.exceptions import RequestValidationError
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
@@ -51,6 +52,12 @@ templates = Jinja2Templates(directory="templates")
 
 
 # Перехват ошибок
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request, exc):
+    return templates.TemplateResponse("error.html",
+                                      {"request": request, "detail": 'Неверный ввод данных!', "status_code": 422})
+
+
 @app.exception_handler(StarletteHTTPException)
 async def http_exception_handler(request, exc):
     return templates.TemplateResponse("error.html",

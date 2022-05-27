@@ -1,5 +1,5 @@
 from typing import List, Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from .card import Card
 
 
@@ -17,12 +17,11 @@ class ColumnExtract(ColumnBase):
 
 class ColumnCreate(BaseModel):
     desk_id: int
-    title: str
+    title: str = Field(min_length=1, max_length=50)
 
 
 class ColumnUpdate(ColumnBase):
-    title: Optional[str] = None
-    # order: Optional[int] = None
+    title: str = Field(min_length=1, max_length=50)
 
 
 class ColumnDelete(ColumnBase):
@@ -34,7 +33,7 @@ class ColumnOrder(ColumnBase):
 
 class Column(ColumnBase):
     id: int
-    title: str
+    title: str = Field(min_length=1, max_length=50)
     desk_id: int
     order: int
     cards: List[Card] = []

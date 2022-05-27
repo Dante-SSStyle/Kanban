@@ -21,7 +21,10 @@ const createDeskButton = document.querySelector('.button-desk-create');
 createDeskButton.addEventListener('click', async () => {
     const deskTitleInput = document.querySelector('#modal-desk-create input');
     const deskTitle = deskTitleInput.value;
-    if (deskTitle) {
+    if (deskTitle.length > 50 || deskTitle.length < 3) {
+        resultToast({failMessage: 'Имя должно содержать от 3 до 50 символов', result: false});
+    }
+    else if (deskTitle) {
         const newDesk = await desk.create(deskTitle);
         resultToast({successMessage: 'Доска созданна!', result: newDesk.ok});
         refresh();
@@ -39,7 +42,11 @@ document.addEventListener('click', async (e) => {
         const deskTitleInput = modal.querySelector('input')
         const deskTitle = deskTitleInput.value;
 
-        if (deskTitle) {
+        if (deskTitle.length > 50 || deskTitle.length < 3) {
+            resultToast({failMessage: 'Имя должно содержать от 3 до 50 символов', result: false});
+        }
+
+        else if (deskTitle) {
             const updDesk = await desk.update(deskId, deskTitle);
             resultToast({successMessage: 'Доска переименованна!', result: updDesk.ok});
             refresh();

@@ -1,5 +1,5 @@
 from typing import List, Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from .card import Card
 from .column import Column
 
@@ -9,7 +9,7 @@ class DeskBase(BaseModel):
 
 
 class DeskCreate(BaseModel):
-    title: str
+    title: str = Field(min_length=3, max_length=50)
 
 
 class DeskExtractAll(BaseModel):
@@ -21,7 +21,7 @@ class DeskExtract(DeskBase):
 
 
 class DeskUpdate(DeskBase):
-    title: str
+    title: str = Field(min_length=3, max_length=50)
 
 
 class DeskDelete(DeskBase):
@@ -30,7 +30,7 @@ class DeskDelete(DeskBase):
 
 class Desk(DeskBase):
     id: int
-    title: str
+    title: str = Field(min_length=3, max_length=50)
     columns: List[Column] = []
     cards: List[Card] = []
     created_at: int

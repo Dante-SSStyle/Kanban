@@ -1,6 +1,6 @@
 from datetime import date
 from typing import List, Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class CardBase(BaseModel):
@@ -19,16 +19,16 @@ class CardExtract(CardBase):
 class CardCreate(BaseModel):
     desk_id: int
     column_id: int
-    title: str
-    text: Optional[str] = "Empty"
+    title: str = Field(min_length=1, max_length=50)
+    text: Optional[str] = Field(max_length=1000, default='Пусто', )
 
 
 class CardUpdate(CardBase):
     column_id: Optional[int] = None
     estimate: Optional[date] = None
     # order: Optional[int] = None
-    text: Optional[str] = None
-    title: Optional[str] = None
+    text: Optional[str] = Field(max_length=1000)
+    title: str = Field(min_length=1, max_length=50)
 
 
 class CardDelete(CardBase):
@@ -41,8 +41,8 @@ class CardOrder(CardBase):
 
 
 class Card(CardBase):
-    text: str
-    title: str
+    text: str = Field(max_length=1000)
+    title: str = Field(min_length=1, max_length=50)
     desk_id: int
     column_id: int
     estimate: int
