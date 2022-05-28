@@ -3,12 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <link rel="shortcut icon" href="{{ url_for('static', path='images/wild-boar.png') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', path='styles/error.css') }}">
     <title>Ошибка передачи данных</title>
 </head>
+{% if status_code == 418 %}
+<body style="background-image: url(static/images/418.jpg); background-size: 100% 150%">
+{% else %}
 <body>
-  <main>
-    <h1>Ошибка {{status_code}}</h1>
-    <p> {{detail}}</p>
+{% endif %}
+
+
+  <main class="row">
+      <div class="col s12 blue-grey-text text-lighten-3"><h2>Ошибка</h2></div>
+      <div class="col s12 red-text"><h1>{{status_code}}</h1></div>
+      {% if status_code == 418 %}
+      <div class="col s12 blue-grey-text text-darken-3"><p>{{detail}}</p></div>
+      {% else %}
+      <div class="col s12 blue-grey-text text-lighten-3"><p>{{detail}}</p></div>
+      {% endif %}
   </main>
 </body>
 </html>

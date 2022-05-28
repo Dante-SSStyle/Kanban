@@ -1,0 +1,13 @@
+body {
+    background-image: url(../images/wp.jpg);
+}
+main {
+    text-align: center;
+    margin-top: 20vh
+}
+h1 {
+    font-size: 150px;
+}
+p {
+    font-size: 30px;
+}

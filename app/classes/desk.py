@@ -39,7 +39,9 @@ class Desk(CommonClass):
             return cls._check404(dsk)
 
         clmns = dsk.columns
-        return {'desk': dsk, 'columns': clmns}
+        fst_clmn = clmns[0].order
+        lst_clmn = clmns[-1].order
+        return {'desk': dsk, 'columns': clmns, 'first_column': fst_clmn, 'last_column': lst_clmn}
 
     @classmethod
     def update(cls, desk: DeskUpdate):

@@ -10,11 +10,11 @@ class CommonClass:
         try:
             query
         except TypeError or ValueError:
-            raise KanbanException(422, 'Неверный ввод данных!')
+            raise KanbanException(400, 'Неверный ввод данных!')
         except Exception:
             raise KanbanException(418, 'Упс!')
         except ValidationError:
-            raise KanbanException(422, 'Неверный ввод данных!')
+            raise KanbanException(400, 'Неверный ввод данных!')
         return query
 
     @classmethod
