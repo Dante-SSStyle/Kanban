@@ -1,6 +1,6 @@
 from classes import CommonClass
 from models import DeskCreate, DeskExtract, DeskUpdate, DeskDelete
-from db import DeskDB, ColumnDB, session
+from db import DeskDB, session
 
 
 class Desk(CommonClass):

@@ -1,7 +1,6 @@
 from classes import CommonClass
 from models import ColumnCreate, ColumnExtract, ColumnExtractAll, ColumnUpdate, ColumnDelete, ColumnOrder
 from db import ColumnDB, session
-from sqlalchemy import func
 
 
 class Column(CommonClass):

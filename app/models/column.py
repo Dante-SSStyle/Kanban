@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List
 from pydantic import BaseModel, Field
 from .card import Card
 
@@ -27,9 +27,11 @@ class ColumnUpdate(ColumnBase):
 class ColumnDelete(ColumnBase):
     pass
 
+
 class ColumnOrder(ColumnBase):
     order: int
     new_order: int
+
 
 class Column(ColumnBase):
     id: int

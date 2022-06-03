@@ -24,6 +24,7 @@ async def create_column(column: ColumnCreate):
 async def update_column(column: ColumnUpdate):
     return Column.update(column)
 
+
 @router.put('/order', description='Меняем порядок столбцов')
 async def upd_order_column(column: ColumnOrder):
     return Column.upd_order(column)

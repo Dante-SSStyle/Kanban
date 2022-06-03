@@ -1,5 +1,3 @@
-from sqlalchemy.orm import Session
-
 from classes import CommonClass
 from models import CardCreate, CardDelete, CardExtract, CardExtractAll, CardUpdate, CardOrder
 from db import CardDB, ColumnDB, session

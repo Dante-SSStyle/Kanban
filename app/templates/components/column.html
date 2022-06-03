@@ -8,13 +8,13 @@
 
         <div class="col-head">
             <span id="col-title" class="category-title card-title"><b class="ititle deep-purple-text text-darken-4" > {{i.title}}</b></span><br>
-            <!-- left arrow     -->
+            <!-- Левая стрелка (перемещение)    -->
             {% if i.order != first_column %}
                 <a href="#">
                     <i class="left-arr small material-icons button-col-decr-order" data-column-order="{{i.order}}" data-column-id="{{i.id}}">chevron_left</i>
                 </a>
             {% endif %}
-            <!--  drop middle arrow -->
+            <!--  Центральная стрелка, drop -->
             <a class='col-drop dropdown-trigger' href='#' data-target='dropdown{{i.id}}'>
                 <i class="small material-icons">arrow_drop_down</i>
             </a>
@@ -30,7 +30,7 @@
                     </a>
                 </li>
             </ul>
-            <!--   right arrow         -->
+            <!--   Правая стрелка (перемещение)         -->
             {% if i.order != last_column %}
                 <a href="#">
                     <i class="right-arr small material-icons button-col-incr-order" data-column-order="{{i.order}}" data-column-id="{{i.id}}">chevron_right</i>
@@ -39,6 +39,7 @@
 
         </div>
         <div class="col-body">
+        <!--    Карточки        -->
         {% for c in i.cards %}
 
         <div class="card-mini card deep-purple darken-4">
@@ -48,7 +49,7 @@
                 <p style="white-space: pre-wrap; text-align: justify; word-wrap:break-word;"> {{c.text}} </p>
                 </div>
                 <div class="card-side-panel">
-                    <!-- top arrow     -->
+                    <!-- Верхняя стрелка (перемещение)     -->
                     {% if c.order > 1 %}
                         <a href="#"><i class="small material-icons button-card-decr-order" data-card-order="{{c.order}}" data-card-id="{{c.id}}">keyboard_arrow_up</i></a>
                     {% endif %}
@@ -68,7 +69,7 @@
                             </a>
                         </li>
                     </ul>
-                    <!-- bottom arrow     -->
+                    <!-- Нижняя стрелка (перемещение)     -->
                         <a href="#"><i class="small material-icons button-card-incr-order" data-card-order="{{c.order}}" data-card-id="{{c.id}}">keyboard_arrow_down</i></a>
                 </div>
             </div>

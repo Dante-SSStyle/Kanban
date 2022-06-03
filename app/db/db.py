@@ -1,12 +1,10 @@
 import databases
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy.orm import Session
 from starlette.config import Config
 from starlette.datastructures import Secret
 from exceptions import KanbanException
-from sqlalchemy import Boolean, Column as Cmn, ForeignKey, Integer, String, Text, Date, func
-from sqlalchemy.orm import relationship
 
 
 
@@ -19,7 +17,6 @@ try:
     POSTGRES_PORT = config("POSTGRES_PORT", cast=str, default="5432")
     POSTGRES_DB = config("POSTGRES_DB", cast=str)
     DATABASE_URL = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_SERVER}:{POSTGRES_PORT}/{POSTGRES_DB}"
-# todo ловить конкретную ошибку
 except Exception:
     raise KanbanException(400, 'Не найден .env файл с авторизационными данными')
 

@@ -24,6 +24,7 @@ async def create_card(card: CardCreate):
 async def update_card(card: CardUpdate):
     return Card.update(card)
 
+
 @router.put('/order', description='Меняем порядок карточек')
 async def upd_order_column(card: CardOrder):
     return Card.upd_order(card)

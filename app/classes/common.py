@@ -1,5 +1,4 @@
 from pydantic import ValidationError
-
 from exceptions import KanbanException
 
 
@@ -14,7 +13,7 @@ class CommonClass:
         except Exception:
             raise KanbanException(418, 'Упс!')
         except ValidationError:
-            raise KanbanException(400, 'Неверный ввод данных!')
+            raise KanbanException(404, 'Ничего не найдено!')
         return query
 
     @classmethod

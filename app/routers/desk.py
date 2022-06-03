@@ -1,6 +1,5 @@
 from fastapi import APIRouter
 from classes import Desk, Column
-from exceptions import KanbanException
 from models import DeskCreate, DeskExtract, DeskUpdate, DeskDelete, ColumnCreate
 
 router = APIRouter()
