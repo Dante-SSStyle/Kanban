@@ -1,0 +1,82 @@
+<div class="col">
+
+    {% if "!" in i.title[-1] %}
+    <div class="category" style="background-color: rgba(255, 215, 0, 0.5);">
+    {% else %}
+    <div class="category">
+    {%endif%}
+
+        <div class="col-head">
+            <span id="col-title" class="category-title card-title"><b class="ititle deep-purple-text text-darken-4" > {{i.title}}</b></span><br>
+            <!-- Левая стрелка (перемещение)    -->
+            {% if i.order != first_column %}
+                <a href="#">
+                    <i class="left-arr small material-icons button-col-decr-order" data-column-order="{{i.order}}" data-column-id="{{i.id}}">chevron_left</i>
+                </a>
+            {% endif %}
+            <!--  Центральная стрелка, drop -->
+            <a class='col-drop dropdown-trigger' href='#' data-target='dropdown{{i.id}}'>
+                <i class="small material-icons">arrow_drop_down</i>
+            </a>
+            <ul id='dropdown{{i.id}}' class='dropdown-content'>
+                <li><a class="modal-trigger green-text text-darken-3" data-column-id="{{i.id}}" href="#modal-column-rename{{i.id}}">
+                    <i class="small material-icons">border_color</i>Изменить
+                </a>
+                </li>
+                <li class="divider" tabindex="-1"></li>
+                <li>
+                    <a class="modal-trigger deep-orange-text text-darken-4" data-column-id="{{i.id}}" href="#modal-column-delete">
+                        <i class="small material-icons">delete</i>Удалить
+                    </a>
+                </li>
+            </ul>
+            <!--   Правая стрелка (перемещение)         -->
+            {% if i.order != last_column %}
+                <a href="#">
+                    <i class="right-arr small material-icons button-col-incr-order" data-column-order="{{i.order}}" data-column-id="{{i.id}}">chevron_right</i>
+                </a>
+            {% endif %}
+
+        </div>
+        <div class="col-body">
+        <!--    Карточки        -->
+        {% for c in i.cards %}
+
+        <div class="card-mini card deep-purple darken-4">
+            <div class="card-content white-text">
+                <div class="card-text-content">
+                <a href="/card/{{c.id}}"> <span class="card-title teal-text text-lighten-1">{{c.title}}</span></a>
+                <p style="white-space: pre-wrap; text-align: justify; word-wrap:break-word;"> {{c.text}} </p>
+                </div>
+                <div class="card-side-panel">
+                    <!-- Верхняя стрелка (перемещение)     -->
+                    {% if c.order > 1 %}
+                        <a href="#"><i class="small material-icons button-card-decr-order" data-card-order="{{c.order}}" data-card-id="{{c.id}}">keyboard_arrow_up</i></a>
+                    {% endif %}
+                    <!--  drop-->
+                    <a class='card-drop dropdown-trigger' href='#' data-target='menu_dropdown{{c.id}}'>
+                        <i class="small material-icons">menu</i>
+                    </a>
+                    <ul id='menu_dropdown{{c.id}}' class='dropdown-content'>
+                        <li><a class="modal-trigger green-text text-darken-3" data-column-id="{{c.id}}" href="#modal-card-upd{{c.id}}">
+                            <i class="small material-icons">border_color</i>Изменить
+                        </a>
+                        </li>
+                        <li class="divider" tabindex="-1"></li>
+                        <li>
+                            <a class="modal-trigger deep-orange-text text-darken-4" data-column-id="{{c.id}}" href="#modal-card-delete">
+                                <i class="small material-icons">delete</i>Удалить
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- Нижняя стрелка (перемещение)     -->
+                        <a href="#"><i class="small material-icons button-card-incr-order" data-card-order="{{c.order}}" data-card-id="{{c.id}}">keyboard_arrow_down</i></a>
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+        </div>
+    </div>
+
+</div>

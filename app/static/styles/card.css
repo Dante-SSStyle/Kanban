@@ -1,0 +1,48 @@
+body {
+    background-image: url(../images/wp.jpg);
+}
+
+.card-mini {
+    text-align: left;
+}
+
+.card-max {
+    text-align: center;
+}
+.card-content {
+    width: 1200px;
+    margin-right: auto;
+    margin-left: auto;
+}
+p {
+    color: #b0bec5;
+}
+.col {
+    height: 90vh;
+    border-radius: 10%;
+    background: rgba(49, 27, 146, 0.5)
+}
+.card-text {
+    height: 60vh;
+    font-size: 20px;
+    text-align: justify;
+    white-space: pre-wrap;
+    word-wrap:break-word;
+}
+.created_date {
+    float: left;
+}
+.updated_date {
+    float: right;
+}
+.change-stage {
+    width: 1200px;
+    background: rgba(100, 149, 237, 0.5);
+}
+.toast-success {
+    background-color: #4caf50;
+}
+
+.toast-fail {
+    background-color: #b71c1c;
+}

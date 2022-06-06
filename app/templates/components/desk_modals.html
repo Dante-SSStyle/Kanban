@@ -1,0 +1,40 @@
+<div id="modal-desk-create" class="modal">
+    <div class="modal-content">
+        <h4>Создать доску</h4>
+        <div class="input-field">
+            <input id="title-create" type="text">
+            <label for="title-create">Введите название</label>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="button-desk-create modal-close btn-flat white-text teal lighten-1">OK</a>
+        <a href="#" class="modal-close btn-flat white-text deep-orange darken-4">Отмена</a>
+    </div>
+</div>
+
+{% for i in desks_list %}
+<div id="modal-desk-rename{{i.id}}" class="modal">
+    <div class="modal-content">
+        <h4>Новое имя</h4>
+        <div class="input-field">
+            <input id="title-rename" type="text" value="{{i.title}}">
+            <label for="title-rename">Введите название</label>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="button-desk-rename modal-close btn-flat white-text teal lighten-1">OK</a>
+        <a href="#" class="modal-close btn-flat white-text deep-orange darken-4">Отмена</a>
+    </div>
+</div>
+{% endfor %}
+
+<div id="modal-desk-delete" class="modal">
+    <div class="modal-content">
+        <h4>Вы уверены, что хотите удалить доску?</h4>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="button-desk-delete modal-close btn-flat white-text teal lighten-1">OK</a>
+        <a href="#" class="modal-close btn-flat white-text deep-orange darken-4">Отмена</a>
+    </div>
+</div>
+

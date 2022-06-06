@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="shortcut icon" href="{{ url_for('static', path='images/wild-boar.png') }}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', path='styles/card.css') }}">
+    <meta charset="UTF-8">
+    <title>План Канбан</title>
+</head>
+<body>
+
+{% include 'components/only_card_modals.html' %}
+
+<div class="container">
+
+    <div class="row">
+        <div class="col s12">
+
+            <div class="card-max">
+
+                <div class="card-content">
+
+                    <h2 class="card-title blue-grey-text text-lighten-3">{{card.title}}</h2>
+                    <p class="card-text white-text">{{card.text}}</p>
+
+
+                    {% for i in columns %}
+                    {% if i.id == card.column_id %}
+                    <a class="btn-flat modal-trigger white-text change-stage" href="#modal-change-stage">
+                        {{i.title}}
+                        <i style="float: right" class="material-icons">menu</i>
+                    </a>
+                    {% endif %}
+                    {% endfor %}
+
+
+                    <div>
+                        <hr>
+                        <p class="created_date">Создано:{{card.created_at}}</p>
+                        <p class="updated_date">Обновлено:{{card.updated_at}}</p>
+                        {%if card.estimate%}
+                        <p class="red-text">ДЕДЛАЙН:{{card.estimate}}</p>
+                        {%endif%}
+                    </div>
+
+
+                    <div>
+                        <a href="{{host}}/{{card.desk_id}}" class="btn teal darken-2">Назад</a>
+                        <a class="modal-trigger btn" data-card-id="{{card.id}}" href="#modal-card-update">Изменить</a>
+                        <a href="#modal-card-delete"  class="modal-trigger btn deep-orange darken-4">Удалить</a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script type="module" src="{{ url_for('static', path='scripts/card.js') }}"></script>
+</html>
